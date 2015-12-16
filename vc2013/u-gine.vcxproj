@@ -81,6 +81,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\game\app_state.h" />
+    <ClInclude Include="..\game\as_game.h" />
+    <ClInclude Include="..\game\as_menu.h" />
+    <ClInclude Include="..\game\defs.h" />
+    <ClInclude Include="..\game\game.h" />
+    <ClInclude Include="..\game\Rect.h" />
     <ClInclude Include="..\include\array.h" />
     <ClInclude Include="..\include\bone.h" />
     <ClInclude Include="..\include\bonedata.h" />
@@ -99,10 +105,13 @@
     <ClInclude Include="..\include\u-gine.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\game\as_game.cpp" />
+    <ClCompile Include="..\game\as_menu.cpp" />
+    <ClCompile Include="..\game\game.cpp" />
+    <ClCompile Include="..\game\main.cpp" />
     <ClCompile Include="..\lib\stb_image.c" />
     <ClCompile Include="..\src\bone.cpp" />
     <ClCompile Include="..\src\image.cpp" />
-    <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\math.cpp" />
     <ClCompile Include="..\src\renderer.cpp" />
     <ClCompile Include="..\src\resourcemanager.cpp" />
