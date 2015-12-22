@@ -81,9 +81,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\game\app_state.h" />
+    <ClInclude Include="..\game\as_game.h" />
+    <ClInclude Include="..\game\as_start_menu.h" />
+    <ClInclude Include="..\game\defs.h" />
+    <ClInclude Include="..\game\entity.h" />
+    <ClInclude Include="..\game\game.h" />
+    <ClInclude Include="..\game\game_settings.h" />
+    <ClInclude Include="..\game\ui.h" />
+    <ClInclude Include="..\game\world.h" />
     <ClInclude Include="..\include\array.h" />
     <ClInclude Include="..\include\bone.h" />
     <ClInclude Include="..\include\bonedata.h" />
+    <ClInclude Include="..\include\font.h" />
     <ClInclude Include="..\include\frame.h" />
     <ClInclude Include="..\include\glinclude.h" />
     <ClInclude Include="..\include\image.h" />
@@ -99,10 +109,18 @@
     <ClInclude Include="..\include\u-gine.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\game\app_state.cpp" />
+    <ClCompile Include="..\game\as_game.cpp" />
+    <ClCompile Include="..\game\as_start_menu.cpp" />
+    <ClCompile Include="..\game\entity.cpp" />
+    <ClCompile Include="..\game\game.cpp" />
+    <ClCompile Include="..\game\main.cpp" />
+    <ClCompile Include="..\game\ui.cpp" />
+    <ClCompile Include="..\game\world.cpp" />
     <ClCompile Include="..\lib\stb_image.c" />
     <ClCompile Include="..\src\bone.cpp" />
+    <ClCompile Include="..\src\font.cpp" />
     <ClCompile Include="..\src\image.cpp" />
-    <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\math.cpp" />
     <ClCompile Include="..\src\renderer.cpp" />
     <ClCompile Include="..\src\resourcemanager.cpp" />

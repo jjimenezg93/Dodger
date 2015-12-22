@@ -64,7 +64,7 @@
 #ifndef STBI_INCLUDE_STB_IMAGE_H
 #define STBI_INCLUDE_STB_IMAGE_H
 
-// To get a header file for this, either cut and paste the header,
+// To get a header file for , either cut and paste the header,
 // or create stb_image.h, #define STBI_HEADER_FILE_ONLY, and
 // then include stb_image.c from it.
 
@@ -103,7 +103,7 @@
 // get RGBA output, but you can check *comp to easily see if it's opaque.
 //
 // An output image with N components has the following components interleaved
-// in this order in each pixel:
+// in  order in each pixel:
 //
 //     N=#comp     components
 //       1           grey
@@ -126,7 +126,7 @@
 //
 // By default we convert iphone-formatted PNGs back to RGB; nominally they
 // would silently load as BGR, except the existing code should have just
-// failed on such iPhone PNGs. But you can disable this conversion by
+// failed on such iPhone PNGs. But you can disable  conversion by
 // by calling stbi_convert_iphone_png_to_rgb(0), in which case
 // you will always just get the native iphone "format" through.
 //
@@ -144,7 +144,7 @@
 // generically. You can still load any file through the existing interface;
 // if you attempt to load an HDR file, it will be automatically remapped to
 // LDR, assuming gamma 2.2 and an arbitrary scale factor defaulting to 1;
-// both of these constants can be reconfigured through this interface:
+// both of these constants can be reconfigured through  interface:
 //
 //     stbi_hdr_to_ldr_gamma(2.2f);
 //     stbi_hdr_to_ldr_scale(1.0f);
@@ -157,7 +157,7 @@
 //
 //    float *data = stbi_loadf(filename, &x, &y, &n, 0);
 // 
-// If you load LDR images through this interface, those images will
+// If you load LDR images through  interface, those images will
 // be promoted to floating point values, run through the inverse of
 // constants corresponding to the above:
 //
@@ -267,7 +267,7 @@ extern int      stbi_is_hdr_from_file(FILE *f);
 // NOT THREADSAFE
 extern const char *stbi_failure_reason  (void); 
 
-// free the loaded image -- this is just free()
+// free the loaded image --  is just free()
 extern void     stbi_image_free      (void *retval_from_stbi_load);
 
 // get image dimensions & components without fully decoding
@@ -283,7 +283,7 @@ extern int      stbi_info_from_file  (FILE *f,                  int *x, int *y, 
 
 
 // for image formats that explicitly notate that they have premultiplied alpha,
-// we just return the colors as stored in the file. set this flag to force
+// we just return the colors as stored in the file. set  flag to force
 // unpremultiplication. results are undefined if the unpremultiply overflow.
 extern void stbi_set_unpremultiply_on_load(int flag_true_if_should_unpremultiply);
 
@@ -492,7 +492,7 @@ static stbi_uc *stbi_gif_load(stbi *s, int *x, int *y, int *comp, int req_comp);
 static int      stbi_gif_info(stbi *s, int *x, int *y, int *comp);
 
 
-// this is not threadsafe
+//  is not threadsafe
 static const char *failure_reason;
 
 const char *stbi_failure_reason(void)
@@ -818,10 +818,10 @@ static uint32 get32le(stbi *s)
 //////////////////////////////////////////////////////////////////////////////
 //
 //  generic converter from built-in img_n to req_comp
-//    individual types do this automatically as much as possible (e.g. jpeg
+//    individual types do  automatically as much as possible (e.g. jpeg
 //    does all cases internally since it needs to colorspace convert anyway,
 //    and it never has alpha, so very few cases ). png can automatically
-//    interleave an alpha=255 channel, but falls back to this for other cases
+//    interleave an alpha=255 channel, but falls back to  for other cases
 //
 //  assume data buffer is malloced, so malloc a new one and free that one
 //  only failure mode is malloc failing
@@ -932,7 +932,7 @@ static stbi_uc *hdr_to_ldr(float   *data, int x, int y, int comp)
 //      - doesn't allow partial loading, loading multiple at once
 //      - still fast on x86 (copying globals into locals doesn't help x86)
 //      - allocates lots of intermediate memory (full size of all components)
-//        - non-interleaved case requires this anyway
+//        - non-interleaved case requires  anyway
 //        - allows good upsampling (see next)
 //    high-quality
 //      - upsampled channels are bilinearly interpolated, even across blocks
@@ -953,7 +953,7 @@ static stbi_uc *hdr_to_ldr(float   *data, int x, int y, int comp)
 typedef struct
 {
    uint8  fast[1 << FAST_BITS];
-   // weirdly, repacking this into AoS is a 10% speed loss, instead of a win
+   // weirdly, repacking  into AoS is a 10% speed loss, instead of a win
    uint16 code[256];
    uint8  values[256];
    uint8  size[257];
@@ -1020,7 +1020,7 @@ static int build_huffman(huffman *h, int *count)
             h->code[k++] = (uint16) (code++);
          if (code-1 >= (1 << j)) return e("bad code lengths","Corrupt JPEG");
       }
-      // compute largest code + 1 for this size, preshifted as needed later
+      // compute largest code + 1 for  size, preshifted as needed later
       h->maxcode[j] = code << (16-j);
       code <<= 1;
    }
@@ -1083,7 +1083,7 @@ stbi_inline static int decode(jpeg *j, huffman *h)
    }
 
    // naive test is to shift the code_buffer down so k bits are
-   // valid, then test against maxcode. To speed this up, we've
+   // valid, then test against maxcode. To speed  up, we've
    // preshifted maxcode left so that it has (16-k) 0s at the
    // end; in other words, regardless of the number of bits, it
    // wants to be compared against something shifted to have 16;
@@ -1258,7 +1258,7 @@ static void idct_block(uint8 *out, int out_stride, short data[64], stbi_dequanti
 
    // columns
    for (i=0; i < 8; ++i,++d,++dq, ++v) {
-      // if all zeroes, shortcut -- this avoids dequantizing 0s and IDCTing
+      // if all zeroes, shortcut --  avoids dequantizing 0s and IDCTing
       if (d[ 8]==0 && d[16]==0 && d[24]==0 && d[32]==0
            && d[40]==0 && d[48]==0 && d[56]==0) {
          //    no shortcut                 0     seconds
@@ -1364,7 +1364,7 @@ static int parse_entropy_coded_data(jpeg *z)
       int n = z->order[0];
       // non-interleaved data, we just need to process one block at a time,
       // in trivial scanline order
-      // number of blocks to do just depends on how many actual "pixels" this
+      // number of blocks to do just depends on how many actual "pixels" 
       // component has, independent of interleaved MCU blocking and such
       int w = (z->img_comp[n].x+7) >> 3;
       int h = (z->img_comp[n].y+7) >> 3;
@@ -1394,7 +1394,7 @@ static int parse_entropy_coded_data(jpeg *z)
             // scan an interleaved mcu... process scan_n components in order
             for (k=0; k < z->scan_n; ++k) {
                int n = z->order[k];
-               // scan out an mcu's worth of this component; that's just determined
+               // scan out an mcu's worth of  component; that's just determined
                // by the basic H and V specified for the component
                for (y=0; y < z->img_comp[n].v; ++y) {
                   for (x=0; x < z->img_comp[n].h; ++x) {
@@ -1854,7 +1854,7 @@ static uint8 *load_jpeg_image(jpeg *z, int *out_x, int *out_y, int *comp, int re
          else                               r->resample = resample_row_generic;
       }
 
-      // can't error after this so, this is safe
+      // can't error after  so,  is safe
       output = (uint8 *) malloc(n * z->s->img_x * z->s->img_y + 1);
       if (!output) { cleanup_jpeg(z); return epuc("outofmem", "Out of memory"); }
 
@@ -2212,7 +2212,7 @@ static int parse_uncompressed_block(zbuf *a)
    // drain the bit-packed data into header
    k = 0;
    while (a->num_bits > 0) {
-      header[k++] = (uint8) (a->code_buffer & 255); // wtf this warns?
+      header[k++] = (uint8) (a->code_buffer & 255); // wtf  warns?
       a->code_buffer >>= 8;
       a->num_bits -= 8;
    }
@@ -2480,7 +2480,7 @@ static int create_png_image_raw(png *a, uint8 *raw, uint32 raw_len, int out_n, u
       raw += img_n;
       cur += out_n;
       prior += out_n;
-      // this is a little gross, so that we don't switch per-pixel or per-component
+      //  is a little gross, so that we don't switch per-pixel or per-component
       if (img_n == out_n) {
          #define CASE(f) \
              case f:     \
@@ -3264,7 +3264,7 @@ static stbi_uc *tga_load(stbi *s, int *x, int *y, int *comp, int req_comp)
       (tga_bits_per_pixel != 24) && (tga_bits_per_pixel != 32))
       )
    {
-      return NULL; // we don't report this as a bad TGA because we don't even know if it's TGA
+      return NULL; // we don't report  as a bad TGA because we don't even know if it's TGA
    }
 
    //   If I'm paletted, then I'll use the number of bits from the palette
@@ -3559,7 +3559,7 @@ static stbi_uc *psd_load(stbi *s, int *x, int *y, int *comp, int req_comp)
          
          p = out+channel;
          if (channel >= channelCount) {
-            // Fill this channel with default data.
+            // Fill  channel with default data.
             for (i = 0; i < pixelCount; i++) *p = (channel == 3 ? 255 : 0), p += 4;
          } else {
             // Read the RLE data.
@@ -3605,7 +3605,7 @@ static stbi_uc *psd_load(stbi *s, int *x, int *y, int *comp, int req_comp)
          
          p = out + channel;
          if (channel > channelCount) {
-            // Fill this channel with default data.
+            // Fill  channel with default data.
             for (i = 0; i < pixelCount; i++) *p = channel == 3 ? 255 : 0, p += 4;
          } else {
             // Read the data.
@@ -3698,7 +3698,7 @@ static stbi_uc *pic_load2(stbi *s,int width,int height,int *comp, stbi_uc *resul
    int act_comp=0,num_packets=0,y,chained;
    pic_packet_t packets[10];
 
-   // this will (should...) cater for even some bizarre stuff like having data
+   //  will (should...) cater for even some bizarre stuff like having data
     // for the same channel in multiple packets.
    do {
       pic_packet_t *packet;
@@ -4069,7 +4069,7 @@ static void stbi_fill_gif_background(stbi_gif *g)
    }
 }
 
-// this function is designed to support animated gifs, although stb_image doesn't support it
+//  function is designed to support animated gifs, although stb_image doesn't support it
 static uint8 *stbi_gif_load_next(stbi *s, stbi_gif *g, int *comp, int req_comp)
 {
    int i;
@@ -4329,8 +4329,8 @@ static float *hdr_load(stbi *s, int *x, int *y, int *comp, int req_comp)
          c2 = get8(s);
          len = get8(s);
          if (c1 != 2 || c2 != 2 || (len & 0x80)) {
-            // not run-length encoded, so we have to actually use THIS data as a decoded
-            // pixel (note this can't be a valid pixel--one of RGB must be >= 128)
+            // not run-length encoded, so we have to actually use  data as a decoded
+            // pixel (note  can't be a valid pixel--one of RGB must be >= 128)
             uint8 rgbe[4];
             rgbe[0] = (uint8) c1;
             rgbe[1] = (uint8) c2;
@@ -4340,7 +4340,7 @@ static float *hdr_load(stbi *s, int *x, int *y, int *comp, int req_comp)
             i = 1;
             j = 0;
             free(scanline);
-            goto main_decode_loop; // yes, this makes no sense
+            goto main_decode_loop; // yes,  makes no sense
          }
          len <<= 8;
          len |= get8(s);
@@ -4668,6 +4668,6 @@ int stbi_info_from_callbacks(stbi_io_callbacks const *c, void *user, int *x, int
       0.53   fix bug in png 3->4; speedup png decoding
       0.52   png handles req_comp=3,4 directly; minor cleanup; jpeg comments
       0.51   obey req_comp requests, 1-component jpegs return as 1-component,
-             on 'test' only check type, not whether we support this variant
+             on 'test' only check type, not whether we support  variant
       0.50   first released version
 */

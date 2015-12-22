@@ -110,8 +110,6 @@ void Bone::ScaleForFrame(int32 f, double* x, double* y) const {
 }
 
 void Bone::Update(int32 currentFrame) {
-	// TAREA: Implementar la especificacion del enunciado
-
 	this->TranslationForFrame(currentFrame, &this->currentX, &this->currentY);
 	this->currentRotation = this->RotationForFrame(currentFrame);
 	this->ScaleForFrame(currentFrame, &this->currentScaleX, &this->currentScaleY);
@@ -122,16 +120,13 @@ void Bone::Update(int32 currentFrame) {
 }
 
 void Bone::Render() {
-	// TAREA: Implementar la especificacion del enunciado
-
 	Renderer::Instance().PushMatrix();
 	Renderer::Instance().TranslateMatrix(this->currentX, this->currentY, 0);
 	Renderer::Instance().RotateMatrix(this->currentRotation, 0, 0, -1);
-	//Renderer::Instance().ScaleMatrix(this->currentScaleX, this->currentScaleY, 1);
 
 	if (this->image) {
 		this->image->SetHandle(this->handleX * this->image->GetWidth(), this->handleY * this->image->GetHeight());
-		Renderer::Instance().DrawImage(this->image, 0, 0, 0U, this->image->GetWidth() * this->currentScaleX, this->image->GetHeight() * this->currentScaleY, 0);
+		Renderer::Instance().DrawImage(this->image, 0, 0, 0U, this->image->GetWidth() * this->currentScaleX, this->image->GetHeight() * this->currentScaleY, 0);	//angle must be 0 because rotation is done before in matrix
 		Renderer::Instance().TranslateMatrix(this->pivotX * this->image->GetWidth(), this->pivotY * this->image->GetHeight(), 0);
 	}
 
