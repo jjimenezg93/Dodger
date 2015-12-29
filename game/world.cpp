@@ -11,7 +11,7 @@ World::World(unsigned short int id, unsigned short int maxEnem, unsigned short i
 	m_maxEnemies = maxEnem;
 	m_worldSpeed = initSpeed;
 
-	m_imgBackground = ResourceManager::Instance().LoadImage(SPACE_BACKGROUND);
+	m_imgBackground = ResourceManager::Instance().LoadImage(LEVEL_1_BACKGROUND);
 
 	m_player = 0;
 }
@@ -32,7 +32,7 @@ void World::Run() {
 	}
 
 	if (m_entities.Size() < m_maxEnemies)
-		if (g_game->GetRandomGen() % 150 == 0)
+		if (g_game->GetRandomGen() % 10 == 0)
 			m_entities.Add(RandomSpawnEntity());
 
 	if (!g_game->GetRandomGen()) {
@@ -116,7 +116,7 @@ void World::MoveDown() {
 
 bool World::IsCollision(Entity * ra, Entity * rb) {
 	bool ret = false;
-	if (ra->GetX() >= rb->GetX() && ra->GetX() <= rb->GetX() + rb->GetSizeX()
+	/*if (ra->GetX() >= rb->GetX() && ra->GetX() <= rb->GetX() + rb->GetSizeX()
 		&& ra->GetY() >= rb->GetY() && ra->GetY() <= rb->GetY() + rb->GetSizeY())
 		ret = true;
 
@@ -130,6 +130,15 @@ bool World::IsCollision(Entity * ra, Entity * rb) {
 
 	if (rb->GetX() + rb->GetSizeX() >= ra->GetX() && rb->GetX() + rb->GetSizeX() <= ra->GetX() + ra->GetSizeX()
 		&& rb->GetY() + rb->GetSizeY() >= ra->GetY() && rb->GetY() + rb->GetSizeY() <= ra->GetY() + ra->GetSizeY())
+		ret = true;
+		*/
+
+	if (ra->GetX() + ra->GetSizeX() >= rb->GetX() && ra->GetX() <= rb->GetX() + rb->GetSizeX()
+		&& ra->GetY() + ra->GetSizeY() >= rb->GetY() && ra->GetY() <= rb->GetY() + rb->GetSizeY())
+		ret = true;
+
+	if (rb->GetX() >= ra->GetX() && rb->GetX() <= ra->GetX() + ra->GetSizeX()
+		&& rb->GetY() + rb->GetSizeY() >= ra->GetY() && rb->GetY() <= ra->GetY() + ra->GetSizeY())
 		ret = true;
 
 	return ret;

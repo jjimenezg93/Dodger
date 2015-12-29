@@ -33,6 +33,8 @@ public:
 
 private:
 	void SetPoints(int newPoints) { m_points = newPoints; }
+
+	void ReadFile(const String *fileName, Array<String> &paramsArray);
 	
 	String m_windowTitle;
 

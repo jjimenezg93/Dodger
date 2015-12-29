@@ -13,6 +13,8 @@ AppState *g_currentAppState;
 EAppState g_wantedState;
 Game *g_game;
 
+EMenuOp currentMenuOp;
+
 void GSetWantedState(EAppState newState) {
 	g_wantedState = newState;
 }
@@ -20,6 +22,7 @@ void GSetWantedState(EAppState newState) {
 int main() {
 	Screen::Instance().Open(1024, 720, false);
 
+	currentMenuOp = EM_MAIN_MENU;
 	GSetWantedState(AS_START_MENU);
 
 	while (1) {

@@ -10,10 +10,12 @@
 void ASStartMenu::Activate() {
 	m_mainFont = ResourceManager::Instance().LoadFont("data/monospaced.png");
 
-	m_menuOptions.Add(new MenuOption(EM_START_GAME, new String("Enter - Start Game")));
-	m_menuOptions.Add(new MenuOption(EM_EXIT_APP, new String("ESC - Exit Game")));
+	m_menuOptions.Add(new MenuOption(EM_LEVEL_1, new String("Level 1")));
+	m_menuOptions.Add(new MenuOption(EM_LEVEL_2, new String("Level 2")));
+	m_menuOptions.Add(new MenuOption(EM_LEVEL_3, new String("Level 3")));
+	m_menuOptions.Add(new MenuOption(EM_EXIT_APP, new String("Exit Game")));
 
-	m_imgBackground = new Image(SPACE_BACKGROUND);
+	m_imgBackground = new Image(MAIN_MENU_BACKGROUND);
 
 	m_activeOption = 0;
 }
@@ -29,10 +31,19 @@ void ASStartMenu::Deactivate() {
 
 void ASStartMenu::ProcessInput() {
 	if (Screen::Instance().KeyPressed(GLFW_KEY_ENTER)) {
-		if (m_menuOptions[m_activeOption]->option == EM_START_GAME)
+		if (m_menuOptions[m_activeOption]->option == EM_LEVEL_1) {
+			currentMenuOp = EM_LEVEL_1;
 			GSetWantedState(AS_GAME);
-		else if (m_menuOptions[m_activeOption]->option == EM_EXIT_APP)
+		} else if (m_menuOptions[m_activeOption]->option == EM_LEVEL_2) {
+			currentMenuOp = EM_LEVEL_2;
+			GSetWantedState(AS_GAME);
+		} else if (m_menuOptions[m_activeOption]->option == EM_LEVEL_3) {
+			currentMenuOp = EM_LEVEL_3;
+			GSetWantedState(AS_GAME);
+		} else if (m_menuOptions[m_activeOption]->option == EM_EXIT_APP) {
 			GSetWantedState(AS_EXIT_APP);
+			currentMenuOp = EM_EXIT_APP;
+		}
 	}
 
 	if (Screen::Instance().KeyPressed(GLFW_KEY_UP) && m_activeOption > 0)

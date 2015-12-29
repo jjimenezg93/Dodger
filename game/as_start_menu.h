@@ -2,9 +2,8 @@
 #define AS_MENU_H
 
 #include "app_state.h"
+#include "defs.h"
 #include "../include/u-gine.h"
-
-enum EMenuOp { EM_START_GAME, EM_EXIT_APP };
 
 struct MenuOption {
 	MenuOption(EMenuOp op, String *str) { option = op; text = str; }
