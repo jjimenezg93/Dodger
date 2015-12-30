@@ -1,6 +1,6 @@
-//#define LEVEL_1_BACKGROUND "data/space_bg.jpg"
-#define LEVEL_2_BACKGROUND "data/space_bg.jpg"
-#define LEVEL_3_BACKGROUND "data/space_bg.jpg"
+#ifndef _GAME_SETTINGS_H
+#define _GAME_SETTINGS_H
+
 #define PLAYER_FILENAME "data/alien.png"
 #define POINTS_FILENAME "data/coin.png"
 #define ENEMY_FILENAME "data/shark.png"
@@ -16,3 +16,5 @@
 #define SPAWN_BORDER 200
 #define DIRECTION_LEFT -1
 #define DIRECTION_RIGHT 1
+
+#endif //!_GAME_SETTINGS_H

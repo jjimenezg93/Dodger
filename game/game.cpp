@@ -11,6 +11,7 @@
 Game::~Game() {
 	delete m_ui;
 	delete m_world;
+	Screen::Instance().SetTitle(String("DODGER"));
 }
 
 void Game::Init() {

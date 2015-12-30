@@ -2,16 +2,10 @@
 #define _GAME_H
 
 #include "../include/u-gine.h"
-//#include "world.h"
 
 class Entity;
 class UI;
 class World;
-
-//	-Game
-//		-UI (usa World) -> input e interfaz sobre el mundo (ptr a World y a UI, para por ejemplo indicar actualización por el input y renderizar la puntuación guardada en Game)
-//		-World (usa GfxEngine) -> actualiza el estado del mundo, renderiza el mundo, se comunica con el Game para indicarle puntuaciones, etc
-//		-GfxEngine (independiente)
 
 class Game {
 public:

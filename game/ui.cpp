@@ -1,7 +1,7 @@
 #include "defs.h"
 #include "ui.h"
-#include "../include/u-gine.h"
 #include "world.h"
+#include "../include/u-gine.h"
 
 UI::UI(World *ptrWorld) {
 	m_world = ptrWorld;
@@ -13,7 +13,7 @@ void UI::SetWorld(World *ptrWorld) {
 
 void UI::ProcessInput() {
 	if (Screen::Instance().KeyPressed(GLFW_KEY_ESC)) {
-		GSetWantedState(AS_START_MENU);
+		GSetWantedState(AS_GAME_OVER);
 	}
 
 	if (Screen::Instance().KeyPressed(GLFW_KEY_LEFT))

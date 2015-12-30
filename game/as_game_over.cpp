@@ -1,15 +1,13 @@
+#include "as_game_over.h"
 #include "as_start_menu.h"
-#include "as_game.h"
 #include "defs.h"
 #include "../include/u-gine.h"
 
-void ASStartMenu::Activate() {
+void ASGameOver::Activate() {
 	m_mainFont = ResourceManager::Instance().LoadFont("data/monospaced.png");
 
-	m_menuOptions.Add(new MenuOption(EM_LEVEL_1, new String("Level 1")));
-	m_menuOptions.Add(new MenuOption(EM_LEVEL_2, new String("Level 2")));
-	m_menuOptions.Add(new MenuOption(EM_LEVEL_3, new String("Level 3")));
-	m_menuOptions.Add(new MenuOption(EM_EXIT_APP, new String("Exit Game")));
+	m_menuOptions.Add(new MenuOption(EM_START_MENU, new String("Back to Start Menu")));
+	m_menuOptions.Add(new MenuOption(EM_EXIT_APP, new String("Exit App")));
 
 	m_imgBackground = new Image(MAIN_MENU_BACKGROUND);
 
@@ -18,11 +16,9 @@ void ASStartMenu::Activate() {
 	m_canInput = false;
 
 	Renderer::Instance().SetBlendMode(Renderer::Instance().ALPHA);		//this allows menu text to be renderer without a solid background
-	
-	Screen::Instance().SetTitle(String("DODGER"));
 }
 
-void ASStartMenu::Deactivate() {
+void ASGameOver::Deactivate() {
 	for (uint8 i = 0; i < m_menuOptions.Size(); i++) {
 		delete m_menuOptions[i];
 	}
@@ -31,18 +27,12 @@ void ASStartMenu::Deactivate() {
 	ResourceManager::Instance().FreeFonts();
 }
 
-void ASStartMenu::ProcessInput() {
+void ASGameOver::ProcessInput() {
 	if (m_canInput == true) {
 		if (Screen::Instance().KeyPressed(GLFW_KEY_ENTER)) {
-			if (m_menuOptions[m_activeOption]->option == EM_LEVEL_1) {
-				currentMenuOp = EM_LEVEL_1;
-				GSetWantedState(AS_GAME);
-			} else if (m_menuOptions[m_activeOption]->option == EM_LEVEL_2) {
-				currentMenuOp = EM_LEVEL_2;
-				GSetWantedState(AS_GAME);
-			} else if (m_menuOptions[m_activeOption]->option == EM_LEVEL_3) {
-				currentMenuOp = EM_LEVEL_3;
-				GSetWantedState(AS_GAME);
+			if (m_menuOptions[m_activeOption]->option == EM_START_MENU) {
+				currentMenuOp = EM_START_MENU;
+				GSetWantedState(AS_START_MENU);
 			} else if (m_menuOptions[m_activeOption]->option == EM_EXIT_APP) {
 				GSetWantedState(AS_EXIT_APP);
 				currentMenuOp = EM_EXIT_APP;
@@ -61,13 +51,13 @@ void ASStartMenu::ProcessInput() {
 	}
 }
 
-void ASStartMenu::Run() {
+void ASGameOver::Run() {
 	if (m_elapsedKeyInput >= MENU_DELAY)
 		m_canInput = true;
 	m_elapsedKeyInput += Screen::Instance().ElapsedTime();
 }
 
-void ASStartMenu::Draw() {
+void ASGameOver::Draw() {
 	Renderer::Instance().Clear();
 
 	//background
@@ -83,7 +73,7 @@ void ASStartMenu::Draw() {
 	for (uint8 i = 0; i < m_menuOptions.Size(); i++) {
 		m_mainFont->SetX(Screen::Instance().GetWidth() / 2 - (m_mainFont->GetTextWidth(*m_menuOptions[i]->text) / 2));
 		m_mainFont->SetY(MENU_MARGIN + (Screen::Instance().GetHeight() / m_mainFont->GetTextHeight(*m_menuOptions[i]->text) * i));
-		
+
 		if (i == m_activeOption) {
 			Renderer::Instance().SetColor(0, 255, 0, 255);
 			Renderer::Instance().DrawEllipse(m_mainFont->GetX() - MENU_POINTER_MARGIN, m_mainFont->GetY() + m_mainFont->GetTextHeight(*m_menuOptions[i]->text) / 2, 4, 4);
@@ -95,7 +85,7 @@ void ASStartMenu::Draw() {
 	Screen::Instance().Refresh();
 }
 
-void ASStartMenu::RestartKeyElapsed() {
+void ASGameOver::RestartKeyElapsed() {
 	m_canInput = false;
 	m_elapsedKeyInput = 0;
 }

@@ -1,12 +1,7 @@
 #ifndef _APP_STATE_H
 #define _APP_STATE_H
 
-enum EAppState {
-	AS_NULL,
-	AS_START_MENU,
-	AS_GAME,
-	AS_EXIT_APP
-};
+enum EAppState { AS_NULL, AS_START_MENU, AS_GAME, AS_GAME_OVER, AS_EXIT_APP };
 
 class AppState {
 public:

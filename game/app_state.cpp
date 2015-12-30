@@ -1,6 +1,7 @@
 #include "app_state.h"
-#include "as_start_menu.h"
 #include "as_game.h"
+#include "as_game_over.h"
+#include "as_start_menu.h"
 #include "defs.h"
 #include <typeinfo>
 
@@ -14,6 +15,9 @@ AppState *newAppState(EAppState wanted) {
 		break;
 	case AS_GAME:
 		return new ASGame();
+		break;
+	case AS_GAME_OVER:
+		return new ASGameOver();
 		break;
 	case AS_EXIT_APP:
 		return nullptr;

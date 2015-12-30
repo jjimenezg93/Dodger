@@ -45,7 +45,7 @@ void World::Run() {
 		if (m_entities[i]->GetType() != ET_PLAYER) {
 			if (IsCollision(m_player, m_entities[i])) {
 				if (m_entities[i]->GetType() == ET_ENEMY)
-					GSetWantedState(AS_START_MENU);
+					GSetWantedState(AS_GAME_OVER);
 				else if (m_entities[i]->GetType() == ET_POINTS) {
 					g_game->AddPoints(POINT_RATE);
 					DespawnEntity(i);

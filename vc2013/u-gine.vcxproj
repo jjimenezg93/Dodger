@@ -50,7 +50,7 @@
     <ClCompile>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <WarningLevel>Level1</WarningLevel>
+      <WarningLevel>Level2</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
@@ -65,7 +65,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level2</WarningLevel>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
@@ -87,11 +87,13 @@
   <ItemGroup>
     <ClInclude Include="..\game\app_state.h" />
     <ClInclude Include="..\game\as_game.h" />
+    <ClInclude Include="..\game\as_game_over.h" />
     <ClInclude Include="..\game\as_start_menu.h" />
     <ClInclude Include="..\game\defs.h" />
     <ClInclude Include="..\game\entity.h" />
     <ClInclude Include="..\game\game.h" />
     <ClInclude Include="..\game\game_settings.h" />
+    <ClInclude Include="..\game\menu_defs.h" />
     <ClInclude Include="..\game\ui.h" />
     <ClInclude Include="..\game\world.h" />
     <ClInclude Include="..\include\array.h" />
@@ -115,6 +117,7 @@
   <ItemGroup>
     <ClCompile Include="..\game\app_state.cpp" />
     <ClCompile Include="..\game\as_game.cpp" />
+    <ClCompile Include="..\game\as_game_over.cpp" />
     <ClCompile Include="..\game\as_start_menu.cpp" />
     <ClCompile Include="..\game\entity.cpp" />
     <ClCompile Include="..\game\game.cpp" />

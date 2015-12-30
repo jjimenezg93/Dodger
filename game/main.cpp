@@ -5,8 +5,8 @@
 #pragma warning(disable: 4820)
 #pragma warning(disable: 4996)
 
-#include "as_start_menu.h"
 #include "as_game.h"
+#include "as_start_menu.h"
 #include "defs.h"
 
 AppState *g_currentAppState;
@@ -22,7 +22,7 @@ void GSetWantedState(EAppState newState) {
 int main() {
 	Screen::Instance().Open(1024, 720, false);
 
-	currentMenuOp = EM_MAIN_MENU;
+	currentMenuOp = EM_START_MENU;
 	GSetWantedState(AS_START_MENU);
 
 	while (1) {

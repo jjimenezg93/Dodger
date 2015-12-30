@@ -1,12 +1,13 @@
 #ifndef _ENTITY_H
 #define _ENTITY_H
 
-#include "../include/u-gine.h"
 #include "defs.h"
+#include "../include/u-gine.h"
 
 class Entity {
 public:
 	Entity(Image *imgSprite, float x, float y, short int dirX, short int dirY, EntityType type);
+	virtual ~Entity();
 
 	float GetX() const { return m_sprite->GetX(); }
 	float GetY() const { return m_sprite->GetY(); }
@@ -27,8 +28,6 @@ public:
 	void SetType(EntityType newType) { m_type = newType; }		//not in use atm
 
 	void Render();
-
-	virtual ~Entity();
 private:
 	Sprite *m_sprite;
 	float m_sizeX, m_sizeY;

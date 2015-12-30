@@ -1,12 +1,12 @@
-#ifndef _AS_MENU_H
-#define _AS_MENU_H
+#ifndef _AS_GAME_OVER_H
+#define _AS_GAME_OVER_H
 
 #include "app_state.h"
 #include "defs.h"
 #include "menu_defs.h"
 #include "../include/u-gine.h"
 
-class ASStartMenu: public AppState {
+class ASGameOver : public AppState {
 public:
 	virtual void Activate();
 	virtual void Deactivate();
@@ -24,4 +24,4 @@ private:
 	bool m_canInput;
 };
 
-#endif //!_AS_MENU_H
+#endif //!_AS_GAME_OVER_H
