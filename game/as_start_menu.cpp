@@ -18,6 +18,10 @@ void ASStartMenu::Activate() {
 	m_imgBackground = new Image(MAIN_MENU_BACKGROUND);
 
 	m_activeOption = 0;
+	m_elapsedKeyInput = 0;
+	m_canInput = true;
+
+	Renderer::Instance().SetBlendMode(Renderer::Instance().ALPHA);		//this allows menu text to be renderer without a solid background
 }
 
 void ASStartMenu::Deactivate() {
@@ -29,30 +33,45 @@ void ASStartMenu::Deactivate() {
 	ResourceManager::Instance().FreeFonts();
 }
 
+void ASStartMenu::RestartKeyElapsed() {
+	m_canInput = false;
+	m_elapsedKeyInput = 0;
+}
+
 void ASStartMenu::ProcessInput() {
-	if (Screen::Instance().KeyPressed(GLFW_KEY_ENTER)) {
-		if (m_menuOptions[m_activeOption]->option == EM_LEVEL_1) {
-			currentMenuOp = EM_LEVEL_1;
-			GSetWantedState(AS_GAME);
-		} else if (m_menuOptions[m_activeOption]->option == EM_LEVEL_2) {
-			currentMenuOp = EM_LEVEL_2;
-			GSetWantedState(AS_GAME);
-		} else if (m_menuOptions[m_activeOption]->option == EM_LEVEL_3) {
-			currentMenuOp = EM_LEVEL_3;
-			GSetWantedState(AS_GAME);
-		} else if (m_menuOptions[m_activeOption]->option == EM_EXIT_APP) {
-			GSetWantedState(AS_EXIT_APP);
-			currentMenuOp = EM_EXIT_APP;
+	if (m_canInput == true) {
+		if (Screen::Instance().KeyPressed(GLFW_KEY_ENTER)) {
+			if (m_menuOptions[m_activeOption]->option == EM_LEVEL_1) {
+				currentMenuOp = EM_LEVEL_1;
+				GSetWantedState(AS_GAME);
+			} else if (m_menuOptions[m_activeOption]->option == EM_LEVEL_2) {
+				currentMenuOp = EM_LEVEL_2;
+				GSetWantedState(AS_GAME);
+			} else if (m_menuOptions[m_activeOption]->option == EM_LEVEL_3) {
+				currentMenuOp = EM_LEVEL_3;
+				GSetWantedState(AS_GAME);
+			} else if (m_menuOptions[m_activeOption]->option == EM_EXIT_APP) {
+				GSetWantedState(AS_EXIT_APP);
+				currentMenuOp = EM_EXIT_APP;
+			}
+
+			RestartKeyElapsed();
+		}
+
+		if (Screen::Instance().KeyPressed(GLFW_KEY_UP) && m_activeOption > 0) {
+			m_activeOption--;
+			RestartKeyElapsed();
+		} else if (Screen::Instance().KeyPressed(GLFW_KEY_DOWN) && m_activeOption < m_menuOptions.Size() - 1) {
+			m_activeOption++;
+			RestartKeyElapsed();
 		}
 	}
-
-	if (Screen::Instance().KeyPressed(GLFW_KEY_UP) && m_activeOption > 0)
-		m_activeOption--;
-	else if (Screen::Instance().KeyPressed(GLFW_KEY_DOWN) && m_activeOption < m_menuOptions.Size() - 1)
-		m_activeOption++;
 }
 
 void ASStartMenu::Run() {
+	if (m_elapsedKeyInput >= MENU_DELAY)
+		m_canInput = true;
+	m_elapsedKeyInput += Screen::Instance().ElapsedTime();
 
 }
 

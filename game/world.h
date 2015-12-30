@@ -8,7 +8,7 @@ class Entity;
 
 class World {
 public:
-	World(unsigned short int id, unsigned short int maxEnem, unsigned short int initSpeed);
+	World(const String background, unsigned short int id, unsigned short int maxEnem, unsigned short int initSpeed);
 	~World();
 
 	void Run();
@@ -31,7 +31,7 @@ private:
 	Image *m_imgBackground;
 	Array<Entity *> m_entities;
 	Entity *m_player;					//makes collision detection easier
-	unsigned short int m_id;			//future use?
+	unsigned short int m_id;			//future use (e.g. highscores or save game)
 	unsigned short int m_maxEnemies;
 	unsigned short int m_worldSpeed;
 };

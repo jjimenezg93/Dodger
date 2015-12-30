@@ -6,12 +6,12 @@
 float genRandomF(double min, double max);
 Image * GetImageByEntityType(EntityType et);
 
-World::World(unsigned short int id, unsigned short int maxEnem, unsigned short int initSpeed) {
+World::World(const String background, unsigned short int id, unsigned short int maxEnem, unsigned short int initSpeed) {
 	m_id = id;
 	m_maxEnemies = maxEnem;
 	m_worldSpeed = initSpeed;
 
-	m_imgBackground = ResourceManager::Instance().LoadImage(LEVEL_1_BACKGROUND);
+	m_imgBackground = ResourceManager::Instance().LoadImage(background);
 
 	m_player = 0;
 }
@@ -116,22 +116,6 @@ void World::MoveDown() {
 
 bool World::IsCollision(Entity * ra, Entity * rb) {
 	bool ret = false;
-	/*if (ra->GetX() >= rb->GetX() && ra->GetX() <= rb->GetX() + rb->GetSizeX()
-		&& ra->GetY() >= rb->GetY() && ra->GetY() <= rb->GetY() + rb->GetSizeY())
-		ret = true;
-
-	if (ra->GetX() + ra->GetSizeX() >= rb->GetX() && ra->GetX() + ra->GetSizeX() <= rb->GetX() + rb->GetSizeX()
-		&& ra->GetY() + ra->GetSizeY() >= rb->GetY() && ra->GetY() + ra->GetSizeY() <= rb->GetY() + rb->GetSizeY())
-		ret = true;
-
-	if (rb->GetX() >= ra->GetX() && rb->GetX() <= ra->GetX() + ra->GetSizeX()
-		&& rb->GetY() >= ra->GetY() && rb->GetY() <= ra->GetY() + ra->GetSizeY())
-		ret = true;
-
-	if (rb->GetX() + rb->GetSizeX() >= ra->GetX() && rb->GetX() + rb->GetSizeX() <= ra->GetX() + ra->GetSizeX()
-		&& rb->GetY() + rb->GetSizeY() >= ra->GetY() && rb->GetY() + rb->GetSizeY() <= ra->GetY() + ra->GetSizeY())
-		ret = true;
-		*/
 
 	if (ra->GetX() + ra->GetSizeX() >= rb->GetX() && ra->GetX() <= rb->GetX() + rb->GetSizeX()
 		&& ra->GetY() + ra->GetSizeY() >= rb->GetY() && ra->GetY() <= rb->GetY() + rb->GetSizeY())
@@ -204,6 +188,9 @@ Image * GetImageByEntityType(EntityType et) {
 		break;
 	case ET_SUB_SPEED:
 		return ResourceManager::Instance().LoadImage(String(SUB_SPEED_FILENAME));
+		break;
+	default:
+		return nullptr;
 		break;
 	}
 }

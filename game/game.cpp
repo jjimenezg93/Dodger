@@ -3,7 +3,6 @@
 
 #include "as_start_menu.h"
 #include "defs.h"
-#include "file_access.h"
 #include "game.h"
 #include "entity.h"
 #include "ui.h"
@@ -22,26 +21,27 @@ void Game::Init() {
 	//from file
 	String *fileName;
 
-	if (currentMenuOp == EM_LEVEL_1)
+	if (currentMenuOp == EM_LEVEL_1) {
 		fileName = new String(LEVEL_1_FILENAME);
-	else if (currentMenuOp == EM_LEVEL_2)
+	} else if (currentMenuOp == EM_LEVEL_2) {
 		fileName = new String(LEVEL_2_FILENAME);
-	else if (currentMenuOp == EM_LEVEL_3)
+	} else if (currentMenuOp == EM_LEVEL_3) {
 		fileName = new String(LEVEL_3_FILENAME);
+	}
 
 	if (fileName) {
 		Array<String> arrayParams;
 
 		ReadFile(fileName, arrayParams);
 
-		m_world = new World(arrayParams[0].ToInt(), arrayParams[1].ToInt(), arrayParams[2].ToInt());
+		m_world = new World(arrayParams[0], arrayParams[1].ToInt(), arrayParams[2].ToInt(), arrayParams[3].ToInt());
 		m_ui = new UI(m_world);
 	} else {
 		unsigned short int worldId = 0;
 		unsigned short int maxEnemies = 4;
 		unsigned short int initialSpeed = 256;
 	
-		m_world = new World(worldId, maxEnemies, initialSpeed);
+		m_world = new World(DEFAULT_BACKGROUND, worldId, maxEnemies, initialSpeed);
 		m_ui = new UI(m_world);
 	}
 

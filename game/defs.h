@@ -4,7 +4,9 @@
 #include "app_state.h"
 #include "game.h"
 
-#define MAIN_MENU_BACKGROUND "data/space_bg.jpg"
+#define MAIN_MENU_BACKGROUND "data/main_menu_bg.jpg"
+#define DEFAULT_BACKGROUND "data/space_bg.jpg"
+#define MENU_DELAY 0.2
 #define LEVEL_FILE_PARAMS 3
 #define LEVEL_1_FILENAME "data/level1.txt"
 #define LEVEL_2_FILENAME "data/level2.txt"

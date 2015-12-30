@@ -21,10 +21,14 @@ public:
 	virtual void Run();
 	virtual void Draw();
 private:
+	void RestartKeyElapsed();
+
 	Font *m_mainFont;
 	Array<MenuOption *> m_menuOptions;
 	uint8 m_activeOption;
 	Image *m_imgBackground;
+	double m_elapsedKeyInput;
+	bool m_canInput;
 };
 
 #endif //!_AS_MENU_H

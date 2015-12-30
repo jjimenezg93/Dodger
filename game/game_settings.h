@@ -1,4 +1,4 @@
-#define LEVEL_1_BACKGROUND "data/space_bg.jpg"
+//#define LEVEL_1_BACKGROUND "data/space_bg.jpg"
 #define LEVEL_2_BACKGROUND "data/space_bg.jpg"
 #define LEVEL_3_BACKGROUND "data/space_bg.jpg"
 #define PLAYER_FILENAME "data/alien.png"

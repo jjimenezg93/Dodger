@@ -1,0 +1,1 @@
+data/dark_matter_bg.jpg,3,16,320
