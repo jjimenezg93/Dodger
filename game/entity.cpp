@@ -1,7 +1,7 @@
 #include "entity.h"
 #include "world.h"
 
-Entity::Entity(Image *imgSprite, float x, float y, short int dirX, short int dirY, EntityType type = ET_POINTS) {
+Entity::Entity(Image *imgSprite, double x, double y, short int dirX, short int dirY, EntityType type = ET_POINTS) {
 	m_sprite = new Sprite(imgSprite);
 
 	m_sprite->SetX(x);

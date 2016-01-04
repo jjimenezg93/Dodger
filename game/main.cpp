@@ -25,6 +25,7 @@ int main() {
 	currentMenuOp = EM_START_MENU;
 	GSetWantedState(AS_START_MENU);
 
+#pragma warning(disable: 4127)
 	while (1) {
 		if (g_wantedState == AS_EXIT_APP)
 			break;
@@ -48,4 +49,5 @@ int main() {
 			g_currentAppState->Draw();
 		}
 	}
+#pragma warning(default: 4127)
 }
