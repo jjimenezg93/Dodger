@@ -24,7 +24,6 @@ public:
 	void SubtractPoints(int p);
 
 	int GetRandomGen() const { return m_randomGen; }
-
 private:
 	void SetPoints(int newPoints) { m_points = newPoints; }
 

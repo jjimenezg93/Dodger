@@ -50,7 +50,7 @@
     <ClCompile>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <WarningLevel>Level2</WarningLevel>
+      <WarningLevel>EnableAllWarnings</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
@@ -65,7 +65,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <WarningLevel>Level2</WarningLevel>
+      <WarningLevel>EnableAllWarnings</WarningLevel>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
@@ -94,6 +94,7 @@
     <ClInclude Include="..\game\game.h" />
     <ClInclude Include="..\game\game_settings.h" />
     <ClInclude Include="..\game\menu_defs.h" />
+    <ClInclude Include="..\game\player.h" />
     <ClInclude Include="..\game\ui.h" />
     <ClInclude Include="..\game\world.h" />
     <ClInclude Include="..\include\array.h" />
@@ -122,6 +123,7 @@
     <ClCompile Include="..\game\entity.cpp" />
     <ClCompile Include="..\game\game.cpp" />
     <ClCompile Include="..\game\main.cpp" />
+    <ClCompile Include="..\game\player.cpp" />
     <ClCompile Include="..\game\ui.cpp" />
     <ClCompile Include="..\game\world.cpp" />
     <ClCompile Include="..\lib\stb_image.c" />

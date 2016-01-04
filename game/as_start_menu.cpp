@@ -81,8 +81,8 @@ void ASStartMenu::Draw() {
 
 	//start game text
 	for (uint8 i = 0; i < m_menuOptions.Size(); i++) {
-		m_mainFont->SetX(Screen::Instance().GetWidth() / 2 - (m_mainFont->GetTextWidth(*m_menuOptions[i]->text) / 2));
-		m_mainFont->SetY(MENU_MARGIN + (Screen::Instance().GetHeight() / m_mainFont->GetTextHeight(*m_menuOptions[i]->text) * i));
+		m_mainFont->SetX(static_cast<float>(Screen::Instance().GetWidth() / 2 - (m_mainFont->GetTextWidth(*m_menuOptions[i]->text) / 2)));
+		m_mainFont->SetY(static_cast<float>(MENU_MARGIN + (Screen::Instance().GetHeight() / m_mainFont->GetTextHeight(*m_menuOptions[i]->text) * i)));
 		
 		if (i == m_activeOption) {
 			Renderer::Instance().SetColor(0, 255, 0, 255);

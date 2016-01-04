@@ -1,19 +1,22 @@
+#pragma warning(disable: 4061)	//ET_NUM_COLORS not explicitly handled (GetImageByEntityType -> switch-case)
+
 #include "entity.h"
+#include "player.h"
 #include "game.h"
 #include "game_Settings.h"
 #include "world.h"
 
-float genRandomF(double min, double max);
+double genRandomF(double min, double max);
 Image * GetImageByEntityType(EntityType et);
 
-World::World(const String background, unsigned short int id, unsigned short int maxEnem, unsigned short int initSpeed) {
+World::World(const String background, int id, int maxEnem, int initSpeed) {		//no need to use an int but Array.ToInt() returns int
 	m_id = id;
 	m_maxEnemies = maxEnem;
 	m_worldSpeed = initSpeed;
 
 	m_imgBackground = ResourceManager::Instance().LoadImage(background);
 
-	m_player = 0;
+	m_player = nullptr;
 }
 
 World::~World() {
@@ -27,17 +30,17 @@ World::~World() {
 void World::Run() {
 	if (!m_player) {
 		Image *playerImg = new Image(String("data/alien.png"));
-		m_player = new Entity(playerImg, 0, 0, 1, 1, ET_PLAYER);
+		m_player = new Player(playerImg, 0, 0, 1, 1);
 		m_entities.Add(m_player);
 	}
 
-	if (m_entities.Size() < m_maxEnemies)
+	if (m_entities.Size() < static_cast<unsigned int>(m_maxEnemies))
 		if (g_game->GetRandomGen() % 10 == 0)
 			m_entities.Add(RandomSpawnEntity());
 
 	if (!g_game->GetRandomGen()) {
-		short int entityToDelete = genRandomF(0, m_entities.Size());
-		delete m_entities[entityToDelete];
+		int entityToDelete = static_cast<int>(genRandomF(0, m_entities.Size()));
+		delete m_entities[static_cast<unsigned int>(entityToDelete)];
 		m_entities.RemoveAt(entityToDelete);
 	}
 
@@ -87,31 +90,19 @@ void World::Draw() {
 }
 
 void World::MoveLeft() {
-	if (m_player->GetX() > 0)
-		m_player->SetX(m_player->GetX() - m_player->GetSpeedX() * Screen::Instance().ElapsedTime());
-	if (m_player->GetX() < 0)
-		m_player->SetX(0);
+	m_player->MoveLeft(Screen::Instance().ElapsedTime());
 }
 
 void World::MoveRight() {
-	if (m_player->GetX() < Screen::Instance().GetWidth() - m_player->GetSizeX())
-		m_player->SetX(m_player->GetX() + m_player->GetSpeedX() * Screen::Instance().ElapsedTime());
-	if (m_player->GetX() > Screen::Instance().GetWidth() - m_player->GetSizeX())
-		m_player->SetX(Screen::Instance().GetWidth() - m_player->GetSizeX());
+	m_player->MoveRight(Screen::Instance().ElapsedTime());
 }
 
 void World::MoveUp() {
-	if (m_player->GetY() > 0)
-		m_player->SetY(m_player->GetY() - m_player->GetSpeedY() * Screen::Instance().ElapsedTime());
-	if (m_player->GetY() < 0)
-		m_player->SetY(0);
+	m_player->MoveUp(Screen::Instance().ElapsedTime());
 }
 
 void World::MoveDown() {
-	if (m_player->GetY() < Screen::Instance().GetHeight() - m_player->GetSizeY())
-		m_player->SetY(m_player->GetY() + m_player->GetSpeedY() * Screen::Instance().ElapsedTime());
-	if (m_player->GetY() > Screen::Instance().GetHeight() - m_player->GetSizeY())
-		m_player->SetY(Screen::Instance().GetHeight() - m_player->GetSizeY());
+	m_player->MoveDown(Screen::Instance().ElapsedTime());
 }
 
 bool World::IsCollision(Entity * ra, Entity * rb) {
@@ -132,7 +123,7 @@ Entity * World::RandomSpawnEntity() {
 	EntityType e = RandomEntityType();
 
 	Entity *entity = new Entity(GetImageByEntityType(e), genRandomF(SPAWN_BORDER, Screen::Instance().GetWidth() - SPAWN_BORDER), genRandomF(SPAWN_BORDER, Screen::Instance().GetHeight() - SPAWN_BORDER)
-		, genRandomF(DIRECTION_LEFT, DIRECTION_RIGHT), genRandomF(DIRECTION_LEFT, DIRECTION_RIGHT),
+		, static_cast<short>(genRandomF(DIRECTION_LEFT, DIRECTION_RIGHT)), static_cast<short>(genRandomF(DIRECTION_LEFT, DIRECTION_RIGHT)),
 		e);
 	entity->SetSpeedX(genRandomF(0.2 * DIFFICULTY, 0.8 * DIFFICULTY));
 	entity->SetSpeedY(genRandomF(0.2 * DIFFICULTY, 0.8 * DIFFICULTY));
@@ -152,9 +143,9 @@ EntityType World::RandomEntityType()
 
 
 
-void World::DespawnEntity(int pos) {
+void World::DespawnEntity(unsigned int pos) {
 	delete m_entities[pos];
-	m_entities.RemoveAt(pos);
+	m_entities.RemoveAt(static_cast<int>(pos));	//here it makes no sense having a negative index, but Array is implemented this way
 }
 
 void World::CheckAndUpdateEntityDirection(Entity * entity) {
@@ -164,12 +155,12 @@ void World::CheckAndUpdateEntityDirection(Entity * entity) {
 		entity->SetSpeedY(entity->GetSpeedY() * -1);
 }
 
-unsigned short int World::GetWorldSpeed() const {
+int World::GetWorldSpeed() const {
 	return m_worldSpeed;
 }
 
-float genRandomF(double min, double max) {
-	return ((float(rand()) / float(RAND_MAX)) * (max - min) + min);
+double genRandomF(double min, double max) {
+	return ((double(rand()) / double(RAND_MAX)) * (max - min) + min);
 }
 
 Image * GetImageByEntityType(EntityType et) {

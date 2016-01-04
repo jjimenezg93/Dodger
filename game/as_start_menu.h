@@ -1,10 +1,14 @@
 #ifndef _AS_MENU_H
 #define _AS_MENU_H
 
+#pragma warning(disable: 4820)
+
 #include "app_state.h"
 #include "defs.h"
 #include "menu_defs.h"
 #include "../include/u-gine.h"
+
+#pragma warning(disable: 4265)		//destructor not virtual
 
 class ASStartMenu: public AppState {
 public:
@@ -23,5 +27,7 @@ private:
 	double m_elapsedKeyInput;
 	bool m_canInput;
 };
+
+#pragma warning(default: 4265)
 
 #endif //!_AS_MENU_H

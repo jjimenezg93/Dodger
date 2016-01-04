@@ -15,12 +15,12 @@ Game::~Game() {
 }
 
 void Game::Init() {
-	srand(time(nullptr));
+	srand(static_cast<unsigned int>(time(nullptr)));
 
 	m_points = 0;
 
 	//from file
-	String *fileName;
+	String *fileName = nullptr;
 
 	if (currentMenuOp == EM_LEVEL_1) {
 		fileName = new String(LEVEL_1_FILENAME);
@@ -38,6 +38,7 @@ void Game::Init() {
 		m_world = new World(arrayParams[0], arrayParams[1].ToInt(), arrayParams[2].ToInt(), arrayParams[3].ToInt());
 		m_ui = new UI(m_world);
 	} else {
+		//default world params
 		unsigned short int worldId = 0;
 		unsigned short int maxEnemies = 4;
 		unsigned short int initialSpeed = 256;
