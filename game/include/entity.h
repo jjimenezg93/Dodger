@@ -4,12 +4,15 @@
 #pragma warning(disable: 4820)
 
 #include "defs.h"
-#include "../include/u-gine.h"
+#include "../../include/u-gine.h"
 
 class Entity {
 public:
 	Entity(Image *imgSprite, double x, double y, short int dirX, short int dirY, EntityType type);
 	virtual ~Entity();
+
+	virtual Sprite * GetSprite() const { return m_sprite; }
+	virtual void SetSprite(Image *imgSprite);
 
 	virtual double GetX() const { return m_sprite->GetX(); }
 	virtual double GetY() const { return m_sprite->GetY(); }
@@ -31,7 +34,7 @@ public:
 	virtual void SetType(EntityType newType) { m_type = newType; }		//not in use atm
 
 	virtual void Render();	//virtual -> different entities may need different kind of animations
-protected:
+private:
 	Sprite *m_sprite;
 	double m_sizeX, m_sizeY;
 	double m_speedX, m_speedY;

@@ -1,5 +1,5 @@
-#include "as_game.h"
-#include "defs.h"
+#include "../include/../include/as_game.h"
+#include "../include/../include/defs.h"
 
 void ASGame::Activate() {
 	g_game = new Game();

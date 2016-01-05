@@ -6,7 +6,7 @@
 #include "app_state.h"
 #include "defs.h"
 #include "menu_defs.h"
-#include "../include/u-gine.h"
+#include "../../include/u-gine.h"
 
 #pragma warning(disable: 4265)		//destructor not virtual
 

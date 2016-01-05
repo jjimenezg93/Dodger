@@ -1,17 +1,17 @@
 #pragma warning(disable: 4061)	//ET_NUM_COLORS not explicitly handled (GetImageByEntityType -> switch-case)
 
-#include "entity.h"
-#include "player.h"
-#include "game.h"
-#include "game_Settings.h"
-#include "world.h"
+#include "../include/entity.h"
+#include "../include/player.h"
+#include "../include/game.h"
+#include "../include/game_Settings.h"
+#include "../include/world.h"
 
 double genRandomF(double min, double max);
 Image * GetImageByEntityType(EntityType et);
 
-World::World(const String background, int id, int maxEnem, int initSpeed) {		//no need to use an int but Array.ToInt() returns int
+World::World(const String background, int id, int maxCollid, int initSpeed) {		//no need to use an int but Array.ToInt() returns int
 	m_id = id;
-	m_maxEnemies = maxEnem;
+	m_maxCollidables = maxCollid;
 	m_worldSpeed = initSpeed;
 
 	m_imgBackground = ResourceManager::Instance().LoadImage(background);
@@ -34,7 +34,7 @@ void World::Run() {
 		m_entities.Add(m_player);
 	}
 
-	if (m_entities.Size() < static_cast<unsigned int>(m_maxEnemies))
+	if (m_entities.Size() < static_cast<unsigned int>(m_maxCollidables))
 		if (g_game->GetRandomGen() % 10 == 0)
 			m_entities.Add(RandomSpawnEntity());
 
@@ -149,9 +149,9 @@ void World::DespawnEntity(unsigned int pos) {
 }
 
 void World::CheckAndUpdateEntityDirection(Entity * entity) {
-	if (entity->GetX() >= Screen::Instance().GetWidth() - entity->GetSizeX() - BORDER_THRESHOLD || entity->GetX() <= BORDER_THRESHOLD)
+	if (entity->GetX() > Screen::Instance().GetWidth() - entity->GetSizeX() - BORDER_THRESHOLD || entity->GetX() < BORDER_THRESHOLD)
 		entity->SetSpeedX(entity->GetSpeedX() * -1);
-	if (entity->GetY() >= Screen::Instance().GetHeight() - entity->GetSizeY() - BORDER_THRESHOLD || entity->GetY() <= BORDER_THRESHOLD)
+	if (entity->GetY() > Screen::Instance().GetHeight() - entity->GetSizeY() - BORDER_THRESHOLD || entity->GetY() < BORDER_THRESHOLD)
 		entity->SetSpeedY(entity->GetSpeedY() * -1);
 }
 

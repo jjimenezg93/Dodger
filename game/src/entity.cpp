@@ -1,5 +1,5 @@
-#include "entity.h"
-#include "world.h"
+#include "../include/entity.h"
+#include "../include/world.h"
 
 Entity::Entity(Image *imgSprite, double x, double y, short int dirX, short int dirY, EntityType type = ET_POINTS) {
 	m_sprite = new Sprite(imgSprite);
@@ -22,10 +22,15 @@ Entity::Entity(Image *imgSprite, double x, double y, short int dirX, short int d
 	m_type = type;
 }
 
-void Entity::Render() {
-	m_sprite->Render();
-}
-
 Entity::~Entity() {
 	delete m_sprite;
+}
+
+void Entity::SetSprite(Image * imgSprite) {
+	delete m_sprite;
+	m_sprite = new Sprite(imgSprite);
+}
+
+void Entity::Render() {
+	m_sprite->Render();
 }

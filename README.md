@@ -3,4 +3,4 @@ Dodger is a simple game developed using U-gine for Game Architecture subject fro
 ___
 
 ###Version
-Project is currently at **v0.9**
+Project is currently at **v0.9.5**

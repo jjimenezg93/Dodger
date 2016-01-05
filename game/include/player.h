@@ -3,13 +3,13 @@
 
 #include "defs.h"
 #include "entity.h"
-#include "../include/u-gine.h"
+#include "../../include/u-gine.h"
 
 class Player: public Entity {
 public:
 	Player(Image *imgSprite, double x, double y, short int dirX, short int dirY);
 
-	//pasing elapsed as param makes Player independent from u-gine ElapsedTime
+	//passing elapsed as param makes Player independent from u-gine ElapsedTime
 	void MoveLeft(double elapsed);
 	void MoveRight(double elapsed);
 	void MoveUp(double elapsed);

@@ -1,8 +1,8 @@
-#include "app_state.h"
-#include "as_game.h"
-#include "as_game_over.h"
-#include "as_start_menu.h"
-#include "defs.h"
+#include "../include/../include/app_state.h"
+#include "../include/../include/as_game.h"
+#include "../include/../include/as_game_over.h"
+#include "../include/../include/as_start_menu.h"
+#include "../include/../include/defs.h"
 #include <typeinfo>
 
 AppState *newAppState(EAppState wanted) {

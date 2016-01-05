@@ -4,14 +4,14 @@
 #pragma warning(disable: 4820)
 
 #include "defs.h"
-#include "../include/u-gine.h"
+#include "../../include/u-gine.h"
 
 class Entity;
 class Player;
 
 class World {
 public:
-	World(const String background, int id, int maxEnem, int initSpeed);
+	World(const String background, int id, int maxCollid, int initSpeed);
 	~World();
 
 	void Run();
@@ -35,7 +35,7 @@ private:
 	Array<Entity *> m_entities;
 	Player *m_player;					//makes collision detection easier
 	int m_id;			//future use (e.g. highscores or save game)
-	int m_maxEnemies;
+	int m_maxCollidables;
 	int m_worldSpeed;
 };
 

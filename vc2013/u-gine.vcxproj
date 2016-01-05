@@ -85,18 +85,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\game\app_state.h" />
-    <ClInclude Include="..\game\as_game.h" />
-    <ClInclude Include="..\game\as_game_over.h" />
-    <ClInclude Include="..\game\as_start_menu.h" />
-    <ClInclude Include="..\game\defs.h" />
-    <ClInclude Include="..\game\entity.h" />
-    <ClInclude Include="..\game\game.h" />
-    <ClInclude Include="..\game\game_settings.h" />
-    <ClInclude Include="..\game\menu_defs.h" />
-    <ClInclude Include="..\game\player.h" />
-    <ClInclude Include="..\game\ui.h" />
-    <ClInclude Include="..\game\world.h" />
+    <ClInclude Include="..\game\include\app_state.h" />
+    <ClInclude Include="..\game\include\as_game.h" />
+    <ClInclude Include="..\game\include\as_game_over.h" />
+    <ClInclude Include="..\game\include\as_start_menu.h" />
+    <ClInclude Include="..\game\include\defs.h" />
+    <ClInclude Include="..\game\include\entity.h" />
+    <ClInclude Include="..\game\include\game.h" />
+    <ClInclude Include="..\game\include\game_settings.h" />
+    <ClInclude Include="..\game\include\menu_defs.h" />
+    <ClInclude Include="..\game\include\player.h" />
+    <ClInclude Include="..\game\include\ui.h" />
+    <ClInclude Include="..\game\include\world.h" />
     <ClInclude Include="..\include\array.h" />
     <ClInclude Include="..\include\bone.h" />
     <ClInclude Include="..\include\bonedata.h" />
@@ -116,16 +116,16 @@
     <ClInclude Include="..\include\u-gine.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\game\app_state.cpp" />
-    <ClCompile Include="..\game\as_game.cpp" />
-    <ClCompile Include="..\game\as_game_over.cpp" />
-    <ClCompile Include="..\game\as_start_menu.cpp" />
-    <ClCompile Include="..\game\entity.cpp" />
-    <ClCompile Include="..\game\game.cpp" />
-    <ClCompile Include="..\game\main.cpp" />
-    <ClCompile Include="..\game\player.cpp" />
-    <ClCompile Include="..\game\ui.cpp" />
-    <ClCompile Include="..\game\world.cpp" />
+    <ClCompile Include="..\game\src\app_state.cpp" />
+    <ClCompile Include="..\game\src\as_game.cpp" />
+    <ClCompile Include="..\game\src\as_game_over.cpp" />
+    <ClCompile Include="..\game\src\as_start_menu.cpp" />
+    <ClCompile Include="..\game\src\entity.cpp" />
+    <ClCompile Include="..\game\src\game.cpp" />
+    <ClCompile Include="..\game\src\main.cpp" />
+    <ClCompile Include="..\game\src\player.cpp" />
+    <ClCompile Include="..\game\src\ui.cpp" />
+    <ClCompile Include="..\game\src\world.cpp" />
     <ClCompile Include="..\lib\stb_image.c" />
     <ClCompile Include="..\src\bone.cpp" />
     <ClCompile Include="..\src\font.cpp" />

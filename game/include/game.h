@@ -1,7 +1,7 @@
 #ifndef _GAME_H
 #define _GAME_H
 
-#include "../include/u-gine.h"
+#include "../../include/u-gine.h"
 
 class Entity;
 class UI;

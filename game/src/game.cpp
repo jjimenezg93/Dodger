@@ -1,12 +1,12 @@
 #include <ctime>
 #include <stdio.h>
 
-#include "as_start_menu.h"
-#include "defs.h"
-#include "game.h"
-#include "entity.h"
-#include "ui.h"
-#include "world.h"
+#include "../include/as_start_menu.h"
+#include "../include/defs.h"
+#include "../include/game.h"
+#include "../include/entity.h"
+#include "../include/ui.h"
+#include "../include/world.h"
 
 Game::~Game() {
 	delete m_ui;
@@ -40,10 +40,10 @@ void Game::Init() {
 	} else {
 		//default world params
 		unsigned short int worldId = 0;
-		unsigned short int maxEnemies = 4;
+		unsigned short int maxCollidables = 4;
 		unsigned short int initialSpeed = 256;
 	
-		m_world = new World(DEFAULT_BACKGROUND, worldId, maxEnemies, initialSpeed);
+		m_world = new World(DEFAULT_BACKGROUND, worldId, maxCollidables, initialSpeed);
 		m_ui = new UI(m_world);
 	}
 
@@ -86,7 +86,8 @@ void Game::AddPoints(int p) {
 void Game::SubtractPoints(int p) {
 	m_points -= p;
 }
-//id, max_enemies, init_speed
+
+//param order -> id, max_collidables, init_speed
 void Game::ReadFile(const String *fileName, Array<String> &paramsArray) {
 	String strFile = String::Read(*fileName);
 	paramsArray = strFile.Split(String(","));
