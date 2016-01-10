@@ -1,5 +1,5 @@
-#ifndef _MENU_OPTION_H
-#define _MENU_OPTION_H
+#ifndef _MENU_DEFS_H
+#define _MENU_DEFS_H
 
 #include "defs.h"
 
@@ -8,11 +8,11 @@
 #define MENU_POINTER_SIZE 4
 
 struct MenuOption {
-	MenuOption(EMenuOp op, String *str) { option = op; text = str; }
-	~MenuOption() { delete text; }
+	MenuOption(EMenuOp op, String str) { m_option = op; m_text = new String(str); }
+	~MenuOption() { delete m_text; }
 
-	EMenuOp option;
-	String *text;
+	EMenuOp m_option;
+	String * m_text;
 };
 
-#endif //!_MENU_OPTION_H
+#endif //!_MENU_DEFS_H

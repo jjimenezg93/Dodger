@@ -1,9 +1,9 @@
 #pragma warning(disable: 4061)	//ET_NUM_COLORS not explicitly handled (GetImageByEntityType -> switch-case)
 
 #include "../include/entity.h"
-#include "../include/player.h"
 #include "../include/game.h"
 #include "../include/game_Settings.h"
+#include "../include/player.h"
 #include "../include/world.h"
 
 double genRandomF(double min, double max);
@@ -20,16 +20,16 @@ World::World(const String background, int id, int maxCollid, int initSpeed) {		/
 }
 
 World::~World() {
-	ResourceManager::Instance().FreeResources();
-	
 	for (unsigned short int i = 0; i < m_entities.Size(); i++) {
 		delete m_entities[i];
 	}
+
+	ResourceManager::Instance().FreeResources();
 }
 
 void World::Run() {
 	if (!m_player) {
-		Image *playerImg = new Image(String("data/alien.png"));
+		Image * playerImg = new Image(String("data/alien.png"));
 		m_player = new Player(playerImg, 0, 0, 1, 1);
 		m_entities.Add(m_player);
 	}
@@ -46,9 +46,10 @@ void World::Run() {
 
 	for (unsigned short int i = 0; i < m_entities.Size(); i++) {
 		if (m_entities[i]->GetType() != ET_PLAYER) {
+			CheckAndUpdateEntityDirection(m_entities[i]);
 			if (IsCollision(m_player, m_entities[i])) {
 				if (m_entities[i]->GetType() == ET_ENEMY)
-					GSetWantedState(AS_GAME_OVER);
+					GSetWantedState(EAS_GAME_OVER);
 				else if (m_entities[i]->GetType() == ET_POINTS) {
 					g_game->AddPoints(POINT_RATE);
 					DespawnEntity(i);
@@ -64,10 +65,6 @@ void World::Run() {
 				}
 			}
 
-			//check direction
-			CheckAndUpdateEntityDirection(m_entities[i]);
-
-			//update position
 			m_entities[i]->SetX(m_entities[i]->GetX() + (m_entities[i]->GetSpeedX() * m_worldSpeed) * Screen::Instance().ElapsedTime());
 			m_entities[i]->SetY(m_entities[i]->GetY() + (m_entities[i]->GetSpeedY() * m_worldSpeed) * Screen::Instance().ElapsedTime());
 		}
@@ -82,7 +79,6 @@ void World::Draw() {
 	//entities rendering
 	for (unsigned short int i = 0; i < m_entities.Size(); i++) {
 		Renderer::Instance().SetColor(255, 255, 255, 255);
-
 		m_entities[i]->Render();
 	}
 
@@ -120,9 +116,9 @@ bool World::IsCollision(Entity * ra, Entity * rb) {
 }
 
 Entity * World::RandomSpawnEntity() {
-	EntityType e = RandomEntityType();
+	EntityType e = RandomGenEntityType();
 
-	Entity *entity = new Entity(GetImageByEntityType(e), genRandomF(SPAWN_BORDER, Screen::Instance().GetWidth() - SPAWN_BORDER), genRandomF(SPAWN_BORDER, Screen::Instance().GetHeight() - SPAWN_BORDER)
+	Entity * entity = new Entity(GetImageByEntityType(e), genRandomF(SPAWN_BORDER, Screen::Instance().GetWidth() - SPAWN_BORDER), genRandomF(SPAWN_BORDER, Screen::Instance().GetHeight() - SPAWN_BORDER)
 		, static_cast<short>(genRandomF(DIRECTION_LEFT, DIRECTION_RIGHT)), static_cast<short>(genRandomF(DIRECTION_LEFT, DIRECTION_RIGHT)),
 		e);
 	entity->SetSpeedX(genRandomF(0.2 * DIFFICULTY, 0.8 * DIFFICULTY));
@@ -130,33 +126,33 @@ Entity * World::RandomSpawnEntity() {
 	return entity;
 }
 
-EntityType World::RandomEntityType()
-{
+void World::DespawnEntity(unsigned int pos) {
+	delete m_entities[pos];
+	m_entities.RemoveAt(static_cast<int>(pos));		//having a negative index makes no sense here, but Array is implemented this way
+}
+
+EntityType World::RandomGenEntityType() {
 	EntityType e = (EntityType)(unsigned short int)(genRandomF(1, ET_NUM_COLORS));
-
-	//debug
-	if (e < 1)
-		e = EntityType(1);
-
 	return e;
 }
 
-
-
-void World::DespawnEntity(unsigned int pos) {
-	delete m_entities[pos];
-	m_entities.RemoveAt(static_cast<int>(pos));	//here it makes no sense having a negative index, but Array is implemented this way
-}
-
 void World::CheckAndUpdateEntityDirection(Entity * entity) {
-	if (entity->GetX() > Screen::Instance().GetWidth() - entity->GetSizeX() - BORDER_THRESHOLD || entity->GetX() < BORDER_THRESHOLD)
+	//in all cases, x/y position is reset -> avoids bouncing
+	if (entity->GetX() > Screen::Instance().GetWidth() - entity->GetSizeX() - BORDER_THRESHOLD) {
+		entity->SetX(Screen::Instance().GetWidth() - entity->GetSizeX() - BORDER_THRESHOLD);
 		entity->SetSpeedX(entity->GetSpeedX() * -1);
-	if (entity->GetY() > Screen::Instance().GetHeight() - entity->GetSizeY() - BORDER_THRESHOLD || entity->GetY() < BORDER_THRESHOLD)
-		entity->SetSpeedY(entity->GetSpeedY() * -1);
-}
+	} else if (entity->GetX() <= 0) {
+		entity->SetX(BORDER_THRESHOLD);
+		entity->SetSpeedX(entity->GetSpeedX() * -1);
+	}
 
-int World::GetWorldSpeed() const {
-	return m_worldSpeed;
+	if (entity->GetY() > Screen::Instance().GetHeight() - entity->GetSizeY() - BORDER_THRESHOLD) {
+		entity->SetY(Screen::Instance().GetHeight() - entity->GetSizeY() - BORDER_THRESHOLD);
+		entity->SetSpeedY(entity->GetSpeedY() * -1);
+	} else if (entity->GetY() <= 0) {
+		entity->SetY(BORDER_THRESHOLD);
+		entity->SetSpeedY(entity->GetSpeedY() * -1);
+	}
 }
 
 double genRandomF(double min, double max) {

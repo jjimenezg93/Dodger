@@ -8,10 +8,10 @@
 #include "menu_defs.h"
 #include "../../include/u-gine.h"
 
-#pragma warning(disable: 4265)		//destructor not virtual
-
 class ASGameOver : public AppState {
 public:
+	virtual ~ASGameOver();
+
 	virtual void Activate();
 	virtual void Deactivate();
 	virtual void ProcessInput();
@@ -20,14 +20,14 @@ public:
 private:
 	void RestartKeyElapsed();
 
-	Font *m_mainFont;
+	Image * m_imgBackground;
+	Font * m_mainFont;
+
 	Array<MenuOption *> m_menuOptions;
 	uint8 m_activeOption;
-	Image *m_imgBackground;
+
 	double m_elapsedKeyInput;
 	bool m_canInput;
 };
-
-#pragma warning(default: 4265)
 
 #endif //!_AS_GAME_OVER_H

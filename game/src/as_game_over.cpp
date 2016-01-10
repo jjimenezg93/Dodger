@@ -3,11 +3,19 @@
 #include "../include/defs.h"
 #include "../../include/u-gine.h"
 
+ASGameOver::~ASGameOver() {
+	for (uint8 i = 0; i < m_menuOptions.Size(); i++) {
+		delete m_menuOptions[i];
+	}
+
+	ResourceManager::Instance().FreeResources();
+}
+
 void ASGameOver::Activate() {
 	m_mainFont = ResourceManager::Instance().LoadFont("data/monospaced.png");
 
-	m_menuOptions.Add(new MenuOption(EM_START_MENU, new String("Back to Start Menu")));
-	m_menuOptions.Add(new MenuOption(EM_EXIT_APP, new String("Exit App")));
+	m_menuOptions.Add(new MenuOption(EMO_START_MENU, String("Back to Start Menu")));
+	m_menuOptions.Add(new MenuOption(EMO_EXIT_APP, String("Exit App")));
 
 	m_imgBackground = new Image(MAIN_MENU_BACKGROUND);
 
@@ -15,27 +23,24 @@ void ASGameOver::Activate() {
 	m_elapsedKeyInput = 0;
 	m_canInput = false;
 
-	Renderer::Instance().SetBlendMode(Renderer::Instance().ALPHA);		//this allows menu text to be renderer without a solid background
+	Renderer::Instance().SetBlendMode(Renderer::Instance().ALPHA);		//menu text without solid background
+
+	Screen::Instance().SetTitle(String("DODGER - Game Over"));
 }
 
 void ASGameOver::Deactivate() {
-	for (uint8 i = 0; i < m_menuOptions.Size(); i++) {
-		delete m_menuOptions[i];
-	}
-
-	//more effective way of holding font?
-	ResourceManager::Instance().FreeFonts();
+	Screen::Instance().SetTitle(String(""));
 }
 
 void ASGameOver::ProcessInput() {
 	if (m_canInput == true) {
 		if (Screen::Instance().KeyPressed(GLFW_KEY_ENTER)) {
-			if (m_menuOptions[m_activeOption]->option == EM_START_MENU) {
-				GSetWantedState(AS_START_MENU);
-				currentMenuOp = EM_START_MENU;
-			} else if (m_menuOptions[m_activeOption]->option == EM_EXIT_APP) {
-				GSetWantedState(AS_EXIT_APP);
-				currentMenuOp = EM_EXIT_APP;
+			if (m_menuOptions[m_activeOption]->m_option == EMO_START_MENU) {
+				GSetWantedState(EAS_START_MENU);
+				g_currentMenuOp = EMO_START_MENU;
+			} else if (m_menuOptions[m_activeOption]->m_option == EMO_EXIT_APP) {
+				GSetWantedState(EAS_EXIT_APP);
+				g_currentMenuOp = EMO_EXIT_APP;
 			}
 
 			RestartKeyElapsed();
@@ -68,20 +73,18 @@ void ASGameOver::Draw() {
 		Renderer::Instance().SetColor(0, 0, 0, 255);
 		Renderer::Instance().DrawRect(0, 0, Screen::Instance().GetWidth(), Screen::Instance().GetHeight());
 	}
-
 	//start game text
 	for (uint8 i = 0; i < m_menuOptions.Size(); i++) {
-		m_mainFont->SetX(static_cast<float>(Screen::Instance().GetWidth() / 2 - (m_mainFont->GetTextWidth(*m_menuOptions[i]->text) / 2)));
-		m_mainFont->SetY(static_cast<float>(MENU_MARGIN + (Screen::Instance().GetHeight() / m_mainFont->GetTextHeight(*m_menuOptions[i]->text) * i)));
+		m_mainFont->SetX(static_cast<float>(Screen::Instance().GetWidth() / 2 - (m_mainFont->GetTextWidth(*m_menuOptions[i]->m_text) / 2)));
+		m_mainFont->SetY(static_cast<float>(MENU_MARGIN + (Screen::Instance().GetHeight() / m_mainFont->GetTextHeight(*m_menuOptions[i]->m_text) * i)));
 
 		if (i == m_activeOption) {
 			Renderer::Instance().SetColor(0, 255, 0, 255);
-			Renderer::Instance().DrawEllipse(m_mainFont->GetX() - MENU_POINTER_MARGIN, m_mainFont->GetY() + m_mainFont->GetTextHeight(*m_menuOptions[i]->text) / 2, 4, 4);
+			Renderer::Instance().DrawEllipse(m_mainFont->GetX() - MENU_POINTER_MARGIN, m_mainFont->GetY() + m_mainFont->GetTextHeight(*m_menuOptions[i]->m_text) / 2, 4, 4);
 		} else
 			Renderer::Instance().SetColor(0, 0, 255, 255);
-		m_mainFont->Render(*m_menuOptions[i]->text, m_mainFont->GetX(), m_mainFont->GetY());
+		m_mainFont->Render(*m_menuOptions[i]->m_text, m_mainFont->GetX(), m_mainFont->GetY());
 	}
-
 	Screen::Instance().Refresh();
 }
 

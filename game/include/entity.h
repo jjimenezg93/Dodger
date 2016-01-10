@@ -8,7 +8,7 @@
 
 class Entity {
 public:
-	Entity(Image *imgSprite, double x, double y, short int dirX, short int dirY, EntityType type);
+	Entity(Image * imgSprite, double x, double y, short int dirX, short int dirY, EntityType type);
 	virtual ~Entity();
 
 	virtual Sprite * GetSprite() const { return m_sprite; }
@@ -35,7 +35,7 @@ public:
 
 	virtual void Render();	//virtual -> different entities may need different kind of animations
 private:
-	Sprite *m_sprite;
+	Sprite * m_sprite;
 	double m_sizeX, m_sizeY;
 	double m_speedX, m_speedY;
 	EntityType m_type;

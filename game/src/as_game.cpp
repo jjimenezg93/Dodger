@@ -1,14 +1,16 @@
 #include "../include/../include/as_game.h"
 #include "../include/../include/defs.h"
 
+ASGame::~ASGame() {
+	delete g_game;
+}
+
 void ASGame::Activate() {
 	g_game = new Game();
 	g_game->Init();
 }
 
-void ASGame::Deactivate() {
-	delete g_game;
-}
+void ASGame::Deactivate() {}
 
 void ASGame::ProcessInput() {
 	g_game->ProcessInput();

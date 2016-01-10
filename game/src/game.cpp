@@ -3,15 +3,14 @@
 
 #include "../include/as_start_menu.h"
 #include "../include/defs.h"
-#include "../include/game.h"
 #include "../include/entity.h"
+#include "../include/game.h"
 #include "../include/ui.h"
 #include "../include/world.h"
 
 Game::~Game() {
 	delete m_ui;
 	delete m_world;
-	Screen::Instance().SetTitle(String("DODGER"));
 }
 
 void Game::Init() {
@@ -19,20 +18,17 @@ void Game::Init() {
 
 	m_points = 0;
 
-	//from file
-	String *fileName = nullptr;
+	String * fileName = nullptr;
 
-	if (currentMenuOp == EM_LEVEL_1) {
+	if (g_currentMenuOp == EMO_LEVEL_1)
 		fileName = new String(LEVEL_1_FILENAME);
-	} else if (currentMenuOp == EM_LEVEL_2) {
+	else if (g_currentMenuOp == EMO_LEVEL_2)
 		fileName = new String(LEVEL_2_FILENAME);
-	} else if (currentMenuOp == EM_LEVEL_3) {
+	else if (g_currentMenuOp == EMO_LEVEL_3)
 		fileName = new String(LEVEL_3_FILENAME);
-	}
 
 	if (fileName) {
 		Array<String> arrayParams;
-
 		ReadFile(fileName, arrayParams);
 
 		m_world = new World(arrayParams[0], arrayParams[1].ToInt(), arrayParams[2].ToInt(), arrayParams[3].ToInt());
@@ -47,9 +43,9 @@ void Game::Init() {
 		m_ui = new UI(m_world);
 	}
 
-	delete fileName;
-
 	m_windowTitle = String("Points = ");
+
+	delete fileName;
 }
 
 void Game::ProcessInput() {
@@ -64,30 +60,15 @@ void Game::Run() {
 
 void Game::Draw() {
 	Screen::Instance().SetTitle(m_windowTitle + String::FromInt(m_points) + " | Speed = " + String::FromInt(m_speed));
-	m_world->Draw();
-}
 
-World * Game::GetWorld() const {
-	return m_world;
+	m_world->Draw();
 }
 
 int Game::GetWorldSpeed() const {
 	return m_world->GetWorldSpeed();
 }
 
-int Game::GetPoints() const {
-	return m_points;
-}
-
-void Game::AddPoints(int p) {
-	m_points += p;
-}
-
-void Game::SubtractPoints(int p) {
-	m_points -= p;
-}
-
-//param order -> id, max_collidables, init_speed
+//param order: bg_file, id, max_collidables, init_speed
 void Game::ReadFile(const String *fileName, Array<String> &paramsArray) {
 	String strFile = String::Read(*fileName);
 	paramsArray = strFile.Split(String(","));

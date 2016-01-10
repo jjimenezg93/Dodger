@@ -7,19 +7,19 @@
 
 AppState *newAppState(EAppState wanted) {
 	switch (wanted) {
-	case AS_NULL:
+	case EAS_NULL:
 		return nullptr;
 		break;
-	case AS_START_MENU:
+	case EAS_START_MENU:
 		return new ASStartMenu();
 		break;
-	case AS_GAME:
+	case EAS_GAME:
 		return new ASGame();
 		break;
-	case AS_GAME_OVER:
+	case EAS_GAME_OVER:
 		return new ASGameOver();
 		break;
-	case AS_EXIT_APP:
+	case EAS_EXIT_APP:
 		return nullptr;
 		break;
 	default:

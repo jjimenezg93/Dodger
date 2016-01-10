@@ -7,7 +7,7 @@
 
 class Player: public Entity {
 public:
-	Player(Image *imgSprite, double x, double y, short int dirX, short int dirY);
+	Player(Image * imgSprite, double x, double y, short int dirX, short int dirY);
 
 	//passing elapsed as param makes Player independent from u-gine ElapsedTime
 	void MoveLeft(double elapsed);

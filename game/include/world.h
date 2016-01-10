@@ -22,18 +22,17 @@ public:
 	void MoveUp();
 	void MoveDown();
 
-	int GetWorldSpeed() const;
-
+	int GetWorldSpeed() const { return m_worldSpeed; }
 private:
-	bool IsCollision(Entity *ra, Entity *rb);
+	bool IsCollision(Entity * ra, Entity * rb);
 	Entity * RandomSpawnEntity();
-	EntityType RandomEntityType();
 	void DespawnEntity(unsigned int pos);
-	void CheckAndUpdateEntityDirection(Entity *object);
+	EntityType RandomGenEntityType();
+	void CheckAndUpdateEntityDirection(Entity * object);
 
-	Image *m_imgBackground;
+	Image * m_imgBackground;
 	Array<Entity *> m_entities;
-	Player *m_player;					//makes collision detection easier
+	Player * m_player;			//makes collision detection easier
 	int m_id;			//future use (e.g. highscores or save game)
 	int m_maxCollidables;
 	int m_worldSpeed;

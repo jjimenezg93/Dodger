@@ -7,14 +7,10 @@ UI::UI(World *ptrWorld) {
 	m_world = ptrWorld;
 }
 
-void UI::SetWorld(World *ptrWorld) {
-	m_world = ptrWorld;
-}
-
 void UI::ProcessInput() {
 	if (Screen::Instance().KeyPressed(GLFW_KEY_ESC)) {
-		GSetWantedState(AS_GAME_OVER);
-		currentMenuOp = EM_GAME_OVER;
+		GSetWantedState(EAS_GAME_OVER);
+		g_currentMenuOp = EMO_GAME_OVER;
 	}
 
 	if (Screen::Instance().KeyPressed(GLFW_KEY_LEFT))
@@ -28,5 +24,8 @@ void UI::ProcessInput() {
 }
 
 void UI::Draw() {
+}
 
+void UI::SetWorld(World *ptrWorld) {
+	m_world = ptrWorld;
 }

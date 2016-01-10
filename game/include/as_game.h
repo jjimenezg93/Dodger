@@ -5,6 +5,8 @@
 
 class ASGame: public AppState {
 public:
+	virtual ~ASGame();
+
 	virtual void Activate();
 	virtual void Deactivate();
 	virtual void ProcessInput();

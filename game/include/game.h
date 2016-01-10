@@ -16,27 +16,27 @@ public:
 	void Run();
 	void Draw();
 
-	World * GetWorld() const;
-	int GetWorldSpeed() const;		//necessary for Entity constructor
+	World * GetWorld() const { return m_world; }
+	int GetWorldSpeed() const;					//defined in .cpp in order to avoid dependency in .h
 
-	int GetPoints() const;
-	void AddPoints(int p);
-	void SubtractPoints(int p);
+	int GetPoints() const { return m_points; }
+	void AddPoints(int p) { m_points += p; }
+	void SubtractPoints(int p) { m_points -= p; }
 
 	int GetRandomGen() const { return m_randomGen; }
 private:
 	void SetPoints(int newPoints) { m_points = newPoints; }
 
-	void ReadFile(const String *fileName, Array<String> &paramsArray);
+	void ReadFile(const String * fileName, Array<String> &paramsArray);
+	
+	UI * m_ui;
+	World * m_world;
 	
 	String m_windowTitle;
 
 	int m_points;
 	int m_speed;
 	int m_randomGen;
-
-	UI *m_ui;
-	World *m_world;
 };
 
 #endif //!_GAME_H
