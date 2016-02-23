@@ -1,9 +1,9 @@
 #include "../include/resourcemanager.h"
-//#include "../include/collisionpixeldata.h"
+#include "../include/collisionpixeldata.h"
 #include "../include/font.h"
 #include "../include/image.h"
 //#include "../include/isometricmap.h"
-//#include "../include/map.h"
+#include "../include/map.h"
 
 ResourceManager* ResourceManager::manager = NULL;
 
@@ -12,12 +12,12 @@ ResourceManager::~ResourceManager() {
 }
 
 ResourceManager& ResourceManager::Instance() {
-	if ( !manager )
+	if (!manager)
 		manager = new ResourceManager();
 	return *manager;
 }
 
-/*CollisionPixelData* ResourceManager::LoadCollisionPixelData(const String& filename) {
+CollisionPixelData* ResourceManager::LoadCollisionPixelData(const String& filename) {
     // Comprobamos si esta cargado
     for ( uint32 i = 0; i < collisionPixelDatas.Size(); i++ )
         if ( collisionPixelDatas[i]->GetFilename() == filename )
@@ -33,7 +33,7 @@ ResourceManager& ResourceManager::Instance() {
         return NULL;
     }
 }
-*/
+
 Font* ResourceManager::LoadFont(const String &filename) {
 	// Comprobamos si esta cargada
     for ( uint32 i = 0; i < fonts.Size(); i++ )
@@ -69,7 +69,6 @@ Image* ResourceManager::LoadImage(const String &filename, uint16 hframes, uint16
 	}
 }
 
-/*
 Map* ResourceManager::LoadMap(const String &filename, uint16 firstColId) {
 	// Comprobamos si esta cargado
     for ( uint32 i = 0; i < maps.Size(); i++ )
@@ -86,7 +85,7 @@ Map* ResourceManager::LoadMap(const String &filename, uint16 firstColId) {
 		return NULL;
 	}
 }
-
+/*
 IsometricMap* ResourceManager::LoadIsometricMap(const String &filename, uint16 firstColId) {
 	// Comprobamos si esta cargado
     for ( uint32 i = 0; i < isometricMaps.Size(); i++ )
@@ -117,7 +116,6 @@ void ResourceManager::FreeImages() {
     images.Clear();
 }
 
-/*
 void ResourceManager::FreeCollisionPixelDatas() {
     for ( uint32 i = 0; i < collisionPixelDatas.Size(); i++ )
         delete collisionPixelDatas[i];
@@ -129,7 +127,7 @@ void ResourceManager::FreeMaps() {
         delete maps[i];
     maps.Clear();
 }
-
+/*
 void ResourceManager::FreeIsometricMaps() {
     for ( uint32 i = 0; i < isometricMaps.Size(); i++ )
         delete isometricMaps[i];
@@ -138,9 +136,9 @@ void ResourceManager::FreeIsometricMaps() {
 */
 
 void ResourceManager::FreeResources() {
-	//FreeCollisionPixelDatas();
+	FreeCollisionPixelDatas();
 	FreeFonts();
 	FreeImages();
-	//FreeMaps();
+	FreeMaps();
 	//FreeIsometricMaps();
 }
