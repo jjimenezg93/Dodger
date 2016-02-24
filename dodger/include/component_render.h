@@ -2,13 +2,9 @@
 #define _COMPONENT_RENDER_H
 
 #include "component.h"
-#include "entity.h"
 
+class Entity;
 class Sprite;
-
-struct UpdatePosMessage: public Message {
-	float x, y;
-};
 
 class ComponentRender: public Component {
 public:

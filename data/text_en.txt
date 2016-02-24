@@ -1,0 +1,6 @@
+﻿TEXT_PLAY_GAME "Jugar partida"
+TEXT_LEVEL_1 "Nivel 1"
+TEXT_LEVEL_2 "Nivel 2"
+TEXT_LEVEL_3 "Nivel 3"
+TEXT_EXIT_GAME "Salir del juego"
+TEXT_BACK_MAIN_MENU "Volver a menú principal"

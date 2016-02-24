@@ -50,7 +50,7 @@
     <ClCompile>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <WarningLevel>EnableAllWarnings</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
@@ -65,7 +65,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
-      <WarningLevel>EnableAllWarnings</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
@@ -90,13 +90,16 @@
     <ClInclude Include="..\dodger\include\as_game_over.h" />
     <ClInclude Include="..\dodger\include\as_start_menu.h" />
     <ClInclude Include="..\dodger\include\component.h" />
+    <ClInclude Include="..\dodger\include\component_playercontrol.h" />
     <ClInclude Include="..\dodger\include\component_position.h" />
     <ClInclude Include="..\dodger\include\component_render.h" />
     <ClInclude Include="..\dodger\include\defs.h" />
     <ClInclude Include="..\dodger\include\entity.h" />
     <ClInclude Include="..\dodger\include\game.h" />
     <ClInclude Include="..\dodger\include\menu_defs.h" />
+    <ClInclude Include="..\dodger\include\messages.h" />
     <ClInclude Include="..\dodger\include\player.h" />
+    <ClInclude Include="..\dodger\include\text_manager.h" />
     <ClInclude Include="..\dodger\include\ui.h" />
     <ClInclude Include="..\dodger\include\world.h" />
     <ClInclude Include="..\include\affector.h" />
@@ -137,12 +140,14 @@
     <ClCompile Include="..\dodger\src\as_game.cpp" />
     <ClCompile Include="..\dodger\src\as_game_over.cpp" />
     <ClCompile Include="..\dodger\src\as_start_menu.cpp" />
+    <ClCompile Include="..\dodger\src\component_playercontrol.cpp" />
     <ClCompile Include="..\dodger\src\component_position.cpp" />
     <ClCompile Include="..\dodger\src\component_render.cpp" />
     <ClCompile Include="..\dodger\src\entity.cpp" />
     <ClCompile Include="..\dodger\src\game.cpp" />
     <ClCompile Include="..\dodger\src\main.cpp" />
     <ClCompile Include="..\dodger\src\player.cpp" />
+    <ClCompile Include="..\dodger\src\text_manager.cpp" />
     <ClCompile Include="..\dodger\src\ui.cpp" />
     <ClCompile Include="..\dodger\src\world.cpp" />
     <ClCompile Include="..\lib\stb_image.c" />
@@ -155,7 +160,6 @@
     <ClCompile Include="..\src\font.cpp" />
     <ClCompile Include="..\src\glyph.cpp" />
     <ClCompile Include="..\src\image.cpp" />
-    <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\map.cpp" />
     <ClCompile Include="..\src\mapscene.cpp" />
     <ClCompile Include="..\src\math.cpp" />

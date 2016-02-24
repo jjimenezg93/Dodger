@@ -2,9 +2,7 @@
 #define _COMPONENT_H
 
 class Entity;
-struct Message {
-	virtual void Nothing() {}
-};
+class Message;
 
 class Component {
 public:

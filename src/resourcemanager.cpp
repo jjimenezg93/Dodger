@@ -1,3 +1,4 @@
+#pragma warning(push, 0)
 #include "../include/resourcemanager.h"
 #include "../include/collisionpixeldata.h"
 #include "../include/font.h"
@@ -12,7 +13,7 @@ ResourceManager::~ResourceManager() {
 }
 
 ResourceManager& ResourceManager::Instance() {
-	if (!manager)
+	if ( !manager )
 		manager = new ResourceManager();
 	return *manager;
 }
@@ -142,3 +143,4 @@ void ResourceManager::FreeResources() {
 	FreeMaps();
 	//FreeIsometricMaps();
 }
+#pragma warning(pop)

@@ -8,6 +8,7 @@
 #include "../include/circlecollision.h"
 #include "../include/screen.h"
 #include <math.h>
+#pragma warning(push, 0)
 
 Sprite::Sprite(Image* image) {
 	m_image = image;
@@ -109,10 +110,9 @@ bool Sprite::CheckCollision(const Map* map) {
 		if (map->CheckCollision(m_collision)) {
 			m_collided = true;
 			return true;
-		} else {
-			return false;
 		}
 	}
+	return false;
 }
 
 void Sprite::RotateTo(int32 angle, double speed) {
@@ -137,15 +137,21 @@ void Sprite::RotateTo(int32 angle, double speed) {
 }
 
 void Sprite::MoveTo(double x, double y, double speed) {
-	if (x == round(m_x) && y == round(m_y) || speed == 0) {
+	if (round(x) == round(m_x) && round(y) == round(m_y) || speed == 0) {
 		m_moving = false;
 	} else {
 		m_toX = x;
 		m_toY = y;
 		m_moving = true;
 		double time = sqrt(pow(m_toX - m_x, 2) + pow(m_toY - m_y, 2)) / speed;
-		m_movingSpeedX = (m_toX - m_x) / time;
-		m_movingSpeedY = (m_toY - m_y) / time;
+		if (time == 0 && m_toX == 0)
+			m_movingSpeedX = 0;
+		else
+			m_movingSpeedX = (m_toX - m_x) / time;
+		if (time == 0 && m_toY == 0)
+			m_movingSpeedY = 0;
+		else
+			m_movingSpeedY = (m_toY - m_y) / time;
 	}
 }
 
@@ -243,3 +249,4 @@ void Sprite::UpdateCollisionBox(double x, double y, double w, double h) {
 	m_centerx = x + (w / 2);
 	m_centery = y + (h / 2);
 }
+#pragma warning(pop)

@@ -9,7 +9,7 @@
 
 #define DIFFICULTY 3
 #define POINT_RATE 10
-#define SPEED_RATE 32
+#define SPEED_RATE 256
 #define BORDER_THRESHOLD 10
 #define SPAWN_BORDER 200
 #define DIRECTION_LEFT -1

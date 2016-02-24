@@ -17,7 +17,6 @@ public:
 	virtual ~Entity();
 
 	//virtual Sprite * GetSprite() const { return m_sprite; }
-	//virtual void SetSprite(Image *imgSprite);
 
 	/*virtual double GetX() const { return m_sprite->GetX(); }
 	virtual double GetY() const { return m_sprite->GetY(); }
@@ -36,7 +35,7 @@ public:
 	virtual void SetSpeedY(double y) { m_speedY = y; }
 
 	virtual EDodgerEntityType GetType() const { return m_type; }
-	virtual void SetType(EDodgerEntityType newType) { m_type = newType; }		//not in use atm
+	virtual void SetType(EDodgerEntityType newType) { m_type = newType; } //not in use atm
 
 	void AddComponent(Component * comp);
 
@@ -48,7 +47,6 @@ public:
 private:
 	std::vector<Component *> m_components;
 
-	//Sprite * m_sprite;
 	double m_sizeX, m_sizeY;
 	double m_speedX, m_speedY;
 	EDodgerEntityType m_type;

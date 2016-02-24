@@ -1,13 +1,9 @@
 #include "../include/entity.h"
 #include "../include/world.h"
 #include "../include/component.h"
+#include "../include/messages.h"
 
 Entity::Entity(double x, double y, short int dirX, short int dirY, EDodgerEntityType type = EDET_POINTS) {
-	//m_sprite = new Sprite(imgSprite);
-
-	//m_sprite->SetX(x);
-	//m_sprite->SetY(y);
-
 	if (dirX == 0)
 		m_speedX = g_game->GetWorldSpeed();
 	else
@@ -16,21 +12,11 @@ Entity::Entity(double x, double y, short int dirX, short int dirY, EDodgerEntity
 		m_speedY = g_game->GetWorldSpeed();
 	else
 		m_speedY = g_game->GetWorldSpeed() * dirY;
-	
-	//m_sizeX = imgSprite->GetWidth();
-	//m_sizeY = imgSprite->GetHeight();
 
 	m_type = type;
 }
 
-Entity::~Entity() {
-	//delete m_sprite;
-}
-
-/*void Entity::SetSprite(Image * imgSprite) {
-	delete m_sprite;
-	m_sprite = new Sprite(imgSprite);
-}*/
+Entity::~Entity() {}
 
 void Entity::AddComponent(Component * comp) {
 	m_components.insert(m_components.end(), comp);
@@ -49,7 +35,3 @@ void Entity::Update() {
 		(*it)->Update();
 	}
 }
-
-/*void Entity::Render() {
-	m_sprite->Render();
-}*/

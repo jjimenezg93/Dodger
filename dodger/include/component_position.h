@@ -2,21 +2,19 @@
 #define _COMPONENT_POSITION_H
 
 #include "component.h"
-#include "entity.h"
 
-//struct UpdatePosMessage: public Message {
-//	float x, y;
-//};
+class Entity;
+class Message;
 
 class ComponentPosition: public Component {
 public:
-	ComponentPosition(Entity * et, Sprite * sprt);
+	ComponentPosition(Entity * et, float x, float y);
 
 	virtual void ReceiveMessage(Message * msg);
 
 	virtual void Update();
 private:
-
+	float m_x, m_y;
 };
 
 #endif //!_COMPONENT_POSITION_H

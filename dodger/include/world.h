@@ -17,6 +17,8 @@ public:
 	void Run();
 	void Draw();
 
+	Player * GetPlayer() { return m_player; }
+
 	/*void MoveLeft();
 	void MoveRight();
 	void MoveUp();

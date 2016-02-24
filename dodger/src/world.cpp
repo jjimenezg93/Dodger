@@ -1,6 +1,9 @@
-#pragma warning(disable: 4061)	//ET_NUM_COLORS not explicitly handled (GetImageByEntityType -> switch-case)
+#pragma warning(disable: 4061)
+//ET_NUM_COLORS not explicitly handled (GetImageByEntityType -> switch-case)
 
 #include "../include/component_render.h"
+#include "../include/component_position.h"
+#include "../include/component_playercontrol.h"
 #include "../include/entity.h"
 #include "../include/game.h"
 #include "../include/game_Settings.h"
@@ -11,8 +14,11 @@
 
 double genRandomF(double min, double max);
 Image * GetImageByEntityType(EDodgerEntityType et);
+float contX = 50;
+float contY = 50;
 
-World::World(const String background, int id, int maxCollid, int initSpeed) {		//no need to use an int but Array.ToInt() returns int
+//no need to use an int but Array.ToInt() returns int
+World::World(const String background, int id, int maxCollid, int initSpeed) {
 	m_id = id;
 	m_maxCollidables = maxCollid;
 	m_worldSpeed = initSpeed;
@@ -20,22 +26,24 @@ World::World(const String background, int id, int maxCollid, int initSpeed) {		/
 	m_scene = new Scene(ResourceManager::Instance().LoadImage(background));
 
 	m_player = nullptr;
+
 }
 
 World::~World() {
+	ResourceManager::Instance().FreeResources();
 	for (unsigned short int i = 0; i < m_entities.Size(); i++) {
 		delete m_entities[i];
 	}
-
-	ResourceManager::Instance().FreeResources();
 }
 
 void World::Run() {
 	if (!m_player) {
 		Image * playerImg = ResourceManager::Instance().LoadImage(String(PLAYER_FILENAME));
-		Sprite * playerSprt = new Sprite(playerImg);
+		Sprite * playerSprt = m_scene->CreateSprite(playerImg);
 		m_player = new Player(0, 0, 1, 1);
 		m_player->AddComponent(new ComponentRender(m_player, playerSprt));
+		m_player->AddComponent(new ComponentPosition(m_player, 50, 50));
+		m_player->AddComponent(new ComponentPlayerControl(m_player));
 		m_entities.Add(m_player);
 	}
 
@@ -128,6 +136,7 @@ Entity * World::RandomSpawnEntity() {
 		e);
 
 	ComponentRender * renderComp = new ComponentRender(entity, sprt);
+	entity->AddComponent(renderComp);
 
 	entity->SetSpeedX(genRandomF(0.2 * DIFFICULTY, 0.8 * DIFFICULTY));
 	entity->SetSpeedY(genRandomF(0.2 * DIFFICULTY, 0.8 * DIFFICULTY));
