@@ -4,7 +4,7 @@
 #include "component.h"
 
 class Entity;
-class Message;
+struct Message;
 
 class ComponentPosition: public Component {
 public:
@@ -12,7 +12,7 @@ public:
 
 	virtual void ReceiveMessage(Message * msg);
 
-	virtual void Update();
+	virtual void Update(float elapsed);
 private:
 	float m_x, m_y;
 };

@@ -14,24 +14,27 @@ void ComponentPlayerControl::ReceiveMessage(Message * msg) {
 	if (posMsg) {
 		switch (posMsg->m_key) {
 		case EDPC_LEFT:
-			m_owner->ReceiveMessage(new UpdatePositionMessage(-SPEED_RATE, 0));
+			m_owner->ReceiveMessage(
+				new UpdateComponentPosMessage(-PLAYER_SPEED_RATE, 0, posMsg->m_elapsed));
 			break;
 		case EDPC_RIGHT:
-			m_owner->ReceiveMessage(new UpdatePositionMessage(SPEED_RATE, 0));
+			m_owner->ReceiveMessage(
+				new UpdateComponentPosMessage(PLAYER_SPEED_RATE, 0, posMsg->m_elapsed));
 			break;
 		case EDPC_UP:
-			m_owner->ReceiveMessage(new UpdatePositionMessage(0, -SPEED_RATE));
+			m_owner->ReceiveMessage(
+				new UpdateComponentPosMessage(0, -PLAYER_SPEED_RATE, posMsg->m_elapsed));
 			break;
 		case EDPC_DOWN:
-			m_owner->ReceiveMessage(new UpdatePositionMessage(0, SPEED_RATE));
+			m_owner->ReceiveMessage(
+				new UpdateComponentPosMessage(0, PLAYER_SPEED_RATE, posMsg->m_elapsed));
 			break;
 		default:
 			break;
-
 		}
 	}
 }
 
-void ComponentPlayerControl::Update() {
+void ComponentPlayerControl::Update(float elapsed) {
 	
 }

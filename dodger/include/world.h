@@ -17,26 +17,20 @@ public:
 	void Run();
 	void Draw();
 
-	Player * GetPlayer() { return m_player; }
-
-	/*void MoveLeft();
-	void MoveRight();
-	void MoveUp();
-	void MoveDown();*/
+	Entity * GetPlayer() { return m_player; }
 
 	int GetWorldSpeed() const { return m_worldSpeed; }
 private:
-	bool IsCollision(Entity * ra, Entity * rb);
 	Entity * RandomSpawnEntity();
 	void DespawnEntity(unsigned int pos);
 	EDodgerEntityType RandomGenEntityType();
+
 	void CheckAndUpdateEntityDirection(Entity * object);
 
-	//Image * m_imgBackground;
 	Scene * m_scene;
 	Array<Entity *> m_entities;
-	Player * m_player;			//makes collision detection easier
-	int m_id;			//future use (e.g. highscores or save game)
+	Entity * m_player; //makes collision detection easier
+	int m_id; //future use (e.g. highscores or save game)
 	int m_maxCollidables;
 	int m_worldSpeed;
 };

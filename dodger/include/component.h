@@ -2,12 +2,14 @@
 #define _COMPONENT_H
 
 class Entity;
-class Message;
+struct Message;
 
 class Component {
 public:
+	virtual ~Component() {}
+
 	virtual void ReceiveMessage(Message * msg) = 0;
-	virtual void Update() = 0;
+	virtual void Update(float elapsed) = 0;
 protected:	
 	Entity * m_owner;
 };

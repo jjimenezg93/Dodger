@@ -34,4 +34,6 @@ std::string TextManager::GetString(std::string id) {
 		}
 		++it;
 	}
+
+	return nullptr;
 }

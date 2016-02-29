@@ -1,21 +1,22 @@
 #pragma warning(disable: 4061)
 //ET_NUM_COLORS not explicitly handled (GetImageByEntityType -> switch-case)
 
-#include "../include/component_render.h"
-#include "../include/component_position.h"
+#include "../include/component_collision.h"
 #include "../include/component_playercontrol.h"
+#include "../include/component_position.h"
+#include "../include/component_render.h"
 #include "../include/entity.h"
 #include "../include/game.h"
 #include "../include/game_Settings.h"
+#include "../include/messages.h"
 #include "../include/player.h"
 #include "../include/world.h"
 
 #include "../../include/u-gine.h"
 
+CollisionPixelData * GetCollisionPixelData(const Entity &et);
 double genRandomF(double min, double max);
 Image * GetImageByEntityType(EDodgerEntityType et);
-float contX = 50;
-float contY = 50;
 
 //no need to use an int but Array.ToInt() returns int
 World::World(const String background, int id, int maxCollid, int initSpeed) {
@@ -40,10 +41,16 @@ void World::Run() {
 	if (!m_player) {
 		Image * playerImg = ResourceManager::Instance().LoadImage(String(PLAYER_FILENAME));
 		Sprite * playerSprt = m_scene->CreateSprite(playerImg);
-		m_player = new Player(0, 0, 1, 1);
-		m_player->AddComponent(new ComponentRender(m_player, playerSprt));
-		m_player->AddComponent(new ComponentPosition(m_player, 50, 50));
+		playerSprt->SetCollision(Sprite::CollisionMode::COLLISION_RECT);
+		/*playerSprt->SetCollisionPixelData(
+			ResourceManager::Instance().LoadCollisionPixelData(PLAYER_COLLISION_FILENAME));
+		playerSprt->SetCollision(Sprite::CollisionMode::COLLISION_PIXEL);*/
+		m_player = new Entity(EDET_PLAYER);
 		m_player->AddComponent(new ComponentPlayerControl(m_player));
+		m_player->AddComponent(new ComponentPosition(m_player, 600, 20));
+		m_player->AddComponent(new ComponentRender(m_player, playerSprt));
+		m_player->AddComponent(new ComponentCollision(m_player, playerSprt));
+		m_player->Update(Screen::Instance().ElapsedTime());
 		m_entities.Add(m_player);
 	}
 
@@ -60,10 +67,15 @@ void World::Run() {
 		}
 	}
 
+	m_scene->Update(Screen::Instance().ElapsedTime());
+
 	for (unsigned short int i = 0; i < m_entities.Size(); i++) {
 		if (m_entities[i]->GetType() != EDET_PLAYER) {
-			CheckAndUpdateEntityDirection(m_entities[i]);
-			if (IsCollision(m_player, m_entities[i])) {
+			IsCollisionMessage isColMsg(m_entities[i]);
+			m_player->ReceiveMessage(&isColMsg);
+			//m_player must modify IsCollisionMessage::m_collided
+			
+			if (isColMsg.m_collided) {
 				if (m_entities[i]->GetType() == EDET_ENEMY)
 					GSetWantedState(EDAS_GAME_OVER);
 				else if (m_entities[i]->GetType() == EDET_POINTS) {
@@ -71,20 +83,17 @@ void World::Run() {
 					DespawnEntity(i);
 					continue;
 				} else if (m_entities[i]->GetType() == EDET_SUB_SPEED) {
-					m_worldSpeed -= SPEED_RATE;
+					m_worldSpeed -= WORLD_SPEED_RATE;
 					DespawnEntity(i);
 					continue;
 				} else if (m_entities[i]->GetType() == EDET_ADD_SPEED) {
-					m_worldSpeed += SPEED_RATE;
+					m_worldSpeed += WORLD_SPEED_RATE;
 					DespawnEntity(i);
 					continue;
 				}
 			}
-
-			/*m_entities[i]->SetX(m_entities[i]->GetX() + (m_entities[i]->GetSpeedX() * m_worldSpeed) * Screen::Instance().ElapsedTime());
-			m_entities[i]->SetY(m_entities[i]->GetY() + (m_entities[i]->GetSpeedY() * m_worldSpeed) * Screen::Instance().ElapsedTime());*/
 		}
-		m_entities[i]->Update();
+		m_entities[i]->Update(Screen::Instance().ElapsedTime());
 	}
 }
 
@@ -93,61 +102,75 @@ void World::Draw() {
 	Screen::Instance().Refresh();
 }
 
-/*void World::MoveLeft() {
-	m_player->MoveLeft(Screen::Instance().ElapsedTime());
-}
-
-void World::MoveRight() {
-	m_player->MoveRight(Screen::Instance().ElapsedTime());
-}
-
-void World::MoveUp() {
-	m_player->MoveUp(Screen::Instance().ElapsedTime());
-}
-
-void World::MoveDown() {
-	m_player->MoveDown(Screen::Instance().ElapsedTime());
-}*/
-
-bool World::IsCollision(Entity * ra, Entity * rb) {
-	bool ret = false;
-
-	/*if (ra->GetX() + ra->GetSizeX() >= rb->GetX() && ra->GetX() <= rb->GetX() + rb->GetSizeX()
-		&& ra->GetY() + ra->GetSizeY() >= rb->GetY() && ra->GetY() <= rb->GetY() + rb->GetSizeY())
-		ret = true;
-
-	if (rb->GetX() >= ra->GetX() && rb->GetX() <= ra->GetX() + ra->GetSizeX()
-		&& rb->GetY() + rb->GetSizeY() >= ra->GetY() && rb->GetY() <= ra->GetY() + ra->GetSizeY())
-		ret = true;*/
-
-	return ret;
-}
-
 Entity * World::RandomSpawnEntity() {
 	EDodgerEntityType e = RandomGenEntityType();
 
 	Sprite * sprt = m_scene->CreateSprite(GetImageByEntityType(e));
+	sprt->SetCollision(Sprite::CollisionMode::COLLISION_RECT);
+	Entity * entity = new Entity(e);
+	//COLLISION_MODE
+	/*sprt->SetCollisionPixelData(GetCollisionPixelData(*entity));
+	sprt->SetCollision(Sprite::CollisionMode::COLLISION_PIXEL);*/
 
-	Entity * entity = new Entity(
-		genRandomF(SPAWN_BORDER, Screen::Instance().GetWidth() - SPAWN_BORDER),
-		genRandomF(SPAWN_BORDER, Screen::Instance().GetHeight() - SPAWN_BORDER),
-		static_cast<short>(genRandomF(DIRECTION_LEFT, DIRECTION_RIGHT)),
-		static_cast<short>(genRandomF(DIRECTION_LEFT, DIRECTION_RIGHT)),
-		e);
+	ComponentPosition * posComp = new ComponentPosition(entity,
+		static_cast<float>(genRandomF(SPAWN_BORDER,
+			Screen::Instance().GetWidth() - SPAWN_BORDER)),
+		static_cast<float>(genRandomF(SPAWN_BORDER,
+			Screen::Instance().GetHeight() - SPAWN_BORDER)));
+	//ComponentPosition * posComp = new ComponentPosition(entity, 500, 500);
+	entity->AddComponent(posComp);
+
+	//RANDOM MOVEMENT COMPONENT
 
 	ComponentRender * renderComp = new ComponentRender(entity, sprt);
 	entity->AddComponent(renderComp);
 
-	entity->SetSpeedX(genRandomF(0.2 * DIFFICULTY, 0.8 * DIFFICULTY));
-	entity->SetSpeedY(genRandomF(0.2 * DIFFICULTY, 0.8 * DIFFICULTY));
+	ComponentCollision * colComp = new ComponentCollision(m_player, sprt);
+	entity->AddComponent(colComp);
+
+	entity->Update(Screen::Instance().ElapsedTime());
+
 	return entity;
 }
 
-void World::DespawnEntity(unsigned int pos) {
-	delete m_entities[pos];
+CollisionPixelData * GetCollisionPixelData(const Entity &et) {
+	//enum EDodgerEntityType { EDET_PLAYER, EDET_POINTS, EDET_ENEMY, EDET_ADD_SPEED,
+	//		EDET_SUB_SPEED, EDET_NUM_COLORS };
+	CollisionPixelData * colPixelData = nullptr;
+	switch (et.GetType()) {
+	case EDET_POINTS:
+		return colPixelData = ResourceManager::Instance().LoadCollisionPixelData(
+			POINTS_COLLISION_FILENAME);
+		break;
+	case EDET_ENEMY:
+		return colPixelData = ResourceManager::Instance().LoadCollisionPixelData(
+			ENEMY_COLLISION_FILENAME);
+		break;
+	case EDET_ADD_SPEED:
+		return colPixelData = ResourceManager::Instance().LoadCollisionPixelData(
+			ADD_SPEED_COLLISION_FILENAME);
+		break;
+	case EDET_SUB_SPEED:
+		return colPixelData = ResourceManager::Instance().LoadCollisionPixelData(
+			SUB_SPEED_COLLISION_FILENAME);
+		break;
+	default:
+		break;
+	}
+}
 
-	//having a negative index makes no sense here, but Array is implemented this way
-	m_entities.RemoveAt(static_cast<int>(pos));
+void World::DespawnEntity(unsigned int pos) {
+	GetSpriteMessage sprtMsg(nullptr);
+	m_entities[pos]->ReceiveMessage(&sprtMsg);
+
+	if (sprtMsg.m_sprt) {
+		m_scene->DeleteSprite(sprtMsg.m_sprt);
+
+		delete m_entities[pos];
+
+		//having a negative index makes no sense here, but Array is implemented this way
+		m_entities.RemoveAt(static_cast<int>(pos));
+	}
 }
 
 EDodgerEntityType World::RandomGenEntityType() {

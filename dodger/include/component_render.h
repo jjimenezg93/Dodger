@@ -3,7 +3,6 @@
 
 #include "component.h"
 
-class Entity;
 class Sprite;
 
 class ComponentRender: public Component {
@@ -12,7 +11,7 @@ public:
 
 	virtual void ReceiveMessage(Message * msg);
 
-	virtual void Update();
+	virtual void Update(float elapsed);
 private:
 	Sprite * m_sprite;
 };

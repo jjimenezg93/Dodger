@@ -4,8 +4,7 @@
 #include "component.h"
 
 class Entity;
-class Message;
-class Sprite;
+struct Message;
 
 class ComponentPlayerControl: public Component {
 public:
@@ -13,9 +12,8 @@ public:
 
 	virtual void ReceiveMessage(Message * msg);
 
-	virtual void Update();
+	virtual void Update(float elapsed);
 private:
-	Sprite * m_sprite;
 };
 
 #endif //!_COMPONENT_PLAYERCONTROL_H

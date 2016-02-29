@@ -8,12 +8,17 @@ ComponentRender::ComponentRender(Entity * et, Sprite * sprt) {
 }
 
 void ComponentRender::ReceiveMessage(Message * msg) {
-	UpdateSpriteMessage * posMsg = dynamic_cast<UpdateSpriteMessage *>(msg);
+	UpdateSpritePosMessage * posMsg = dynamic_cast<UpdateSpritePosMessage *>(msg);
 	if (posMsg) {
 		m_sprite->SetPosition(posMsg->m_x, posMsg->m_y);
 	}
+	GetSpriteMessage * sprtMsg = dynamic_cast<GetSpriteMessage *>(msg);
+	if (sprtMsg) {
+		sprtMsg->m_sprt = m_sprite;
+		sprtMsg->m_modified = true;
+	}
 }
 
-void ComponentRender::Update() {
+void ComponentRender::Update(float elapsed) {
 	
 }

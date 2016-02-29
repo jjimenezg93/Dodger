@@ -17,14 +17,24 @@ void UI::ProcessInput() {
 		g_currentMenuOp = EDMO_GAME_OVER;
 	}
 
-	if (Screen::Instance().KeyPressed(GLFW_KEY_LEFT))
-		m_world->GetPlayer()->ReceiveMessage(new PlayerControlMessage(EDPC_LEFT));
-	else if (Screen::Instance().KeyPressed(GLFW_KEY_RIGHT))
-		m_world->GetPlayer()->ReceiveMessage(new PlayerControlMessage(EDPC_RIGHT));
-	if (Screen::Instance().KeyPressed(GLFW_KEY_UP))
-		m_world->GetPlayer()->ReceiveMessage(new PlayerControlMessage(EDPC_UP));
-	else if (Screen::Instance().KeyPressed(GLFW_KEY_DOWN))
-		m_world->GetPlayer()->ReceiveMessage(new PlayerControlMessage(EDPC_DOWN));
+	if (Screen::Instance().KeyPressed(GLFW_KEY_LEFT)) {
+		m_world->GetPlayer()->ReceiveMessage(
+			new PlayerControlMessage(EDPC_LEFT,
+				static_cast<float>(Screen::Instance().ElapsedTime())));
+	} else if (Screen::Instance().KeyPressed(GLFW_KEY_RIGHT)) {
+		m_world->GetPlayer()->ReceiveMessage(
+			new PlayerControlMessage(EDPC_RIGHT,
+				static_cast<float>(Screen::Instance().ElapsedTime())));
+	}
+	if (Screen::Instance().KeyPressed(GLFW_KEY_UP)) {
+		m_world->GetPlayer()->ReceiveMessage(
+			new PlayerControlMessage(EDPC_UP,
+				static_cast<float>(Screen::Instance().ElapsedTime())));
+	} else if (Screen::Instance().KeyPressed(GLFW_KEY_DOWN)) {
+		m_world->GetPlayer()->ReceiveMessage(
+			new PlayerControlMessage(EDPC_DOWN,
+				static_cast<float>(Screen::Instance().ElapsedTime())));
+	}
 }
 
 void UI::Draw() {}

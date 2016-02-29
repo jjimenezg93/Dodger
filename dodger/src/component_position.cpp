@@ -14,13 +14,13 @@ ComponentPosition::ComponentPosition(Entity * et, float x, float y) {
 /* ElapsedTime should be passed as parameter for low coupling, but then it should probably
 come from Entity */
 void ComponentPosition::ReceiveMessage(Message * msg) {
-	UpdatePositionMessage * posMsg = dynamic_cast<UpdatePositionMessage *>(msg);
+	UpdateComponentPosMessage * posMsg = dynamic_cast<UpdateComponentPosMessage *>(msg);
 	if (posMsg) {
-		m_x += posMsg->m_x * Screen::Instance().ElapsedTime();
-		m_y += posMsg->m_y * Screen::Instance().ElapsedTime();
+		m_x += posMsg->m_x * posMsg->m_elapsed;
+		m_y += posMsg->m_y * posMsg->m_elapsed;
 	}
 }
 
-void ComponentPosition::Update() {
-	m_owner->ReceiveMessage(new UpdateSpriteMessage(m_x, m_y));
+void ComponentPosition::Update(float elapsed) {
+	m_owner->ReceiveMessage(new UpdateSpritePosMessage(m_x, m_y));
 }
