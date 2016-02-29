@@ -42,9 +42,9 @@ void World::Run() {
 		Image * playerImg = ResourceManager::Instance().LoadImage(String(PLAYER_FILENAME));
 		Sprite * playerSprt = m_scene->CreateSprite(playerImg);
 		playerSprt->SetCollision(Sprite::CollisionMode::COLLISION_RECT);
-		/*playerSprt->SetCollisionPixelData(
+		playerSprt->SetCollisionPixelData(
 			ResourceManager::Instance().LoadCollisionPixelData(PLAYER_COLLISION_FILENAME));
-		playerSprt->SetCollision(Sprite::CollisionMode::COLLISION_PIXEL);*/
+		playerSprt->SetCollision(Sprite::CollisionMode::COLLISION_PIXEL);
 		m_player = new Entity(EDET_PLAYER);
 		m_player->AddComponent(new ComponentPlayerControl(m_player));
 		m_player->AddComponent(new ComponentPosition(m_player, 600, 20));
@@ -108,16 +108,18 @@ Entity * World::RandomSpawnEntity() {
 	Sprite * sprt = m_scene->CreateSprite(GetImageByEntityType(e));
 	sprt->SetCollision(Sprite::CollisionMode::COLLISION_RECT);
 	Entity * entity = new Entity(e);
-	//COLLISION_MODE
-	/*sprt->SetCollisionPixelData(GetCollisionPixelData(*entity));
-	sprt->SetCollision(Sprite::CollisionMode::COLLISION_PIXEL);*/
+	
+	/* not all sprites should have pixel collision, the best solution would be having a manager
+	to decide if collision must be circ, rect or pixel, or get it from file, but this solution
+	is easier to implement for now */
+	sprt->SetCollisionPixelData(GetCollisionPixelData(*entity));
+	sprt->SetCollision(Sprite::CollisionMode::COLLISION_PIXEL);
 
 	ComponentPosition * posComp = new ComponentPosition(entity,
 		static_cast<float>(genRandomF(SPAWN_BORDER,
 			Screen::Instance().GetWidth() - SPAWN_BORDER)),
 		static_cast<float>(genRandomF(SPAWN_BORDER,
 			Screen::Instance().GetHeight() - SPAWN_BORDER)));
-	//ComponentPosition * posComp = new ComponentPosition(entity, 500, 500);
 	entity->AddComponent(posComp);
 
 	//RANDOM MOVEMENT COMPONENT
@@ -134,8 +136,6 @@ Entity * World::RandomSpawnEntity() {
 }
 
 CollisionPixelData * GetCollisionPixelData(const Entity &et) {
-	//enum EDodgerEntityType { EDET_PLAYER, EDET_POINTS, EDET_ENEMY, EDET_ADD_SPEED,
-	//		EDET_SUB_SPEED, EDET_NUM_COLORS };
 	CollisionPixelData * colPixelData = nullptr;
 	switch (et.GetType()) {
 	case EDET_POINTS:
