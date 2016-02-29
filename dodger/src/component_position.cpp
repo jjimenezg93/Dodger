@@ -2,7 +2,6 @@
 #include "../include/component_render.h"
 #include "../include/entity.h"
 #include "../include/messages.h"
-
 #include "../../include/screen.h"
 
 ComponentPosition::ComponentPosition(Entity * et, float x, float y) {
@@ -11,13 +10,17 @@ ComponentPosition::ComponentPosition(Entity * et, float x, float y) {
 	m_y = y;
 }
 
-/* ElapsedTime should be passed as parameter for low coupling, but then it should probably
-come from Entity */
 void ComponentPosition::ReceiveMessage(Message * msg) {
 	UpdateComponentPosMessage * posMsg = dynamic_cast<UpdateComponentPosMessage *>(msg);
 	if (posMsg) {
 		m_x += posMsg->m_x * posMsg->m_elapsed;
 		m_y += posMsg->m_y * posMsg->m_elapsed;
+	}
+
+	GetSpritePosMessage * sprtPosMsg = dynamic_cast<GetSpritePosMessage *>(msg);
+	if (sprtPosMsg) {
+		sprtPosMsg->m_x = m_x;
+		sprtPosMsg->m_y = m_y;
 	}
 }
 

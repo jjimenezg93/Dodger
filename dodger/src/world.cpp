@@ -4,6 +4,7 @@
 #include "../include/component_collision.h"
 #include "../include/component_playercontrol.h"
 #include "../include/component_position.h"
+#include "../include/component_random_movement.h"
 #include "../include/component_render.h"
 #include "../include/entity.h"
 #include "../include/game.h"
@@ -47,7 +48,11 @@ void World::Run() {
 		playerSprt->SetCollision(Sprite::CollisionMode::COLLISION_PIXEL);
 		m_player = new Entity(EDET_PLAYER);
 		m_player->AddComponent(new ComponentPlayerControl(m_player));
-		m_player->AddComponent(new ComponentPosition(m_player, 600, 20));
+		m_player->AddComponent(new ComponentPosition(m_player,
+			static_cast<float>(genRandomF(SPAWN_BORDER,
+				Screen::Instance().GetWidth() - SPAWN_BORDER)),
+			static_cast<float>(genRandomF(SPAWN_BORDER,
+				Screen::Instance().GetHeight() - SPAWN_BORDER))));
 		m_player->AddComponent(new ComponentRender(m_player, playerSprt));
 		m_player->AddComponent(new ComponentCollision(m_player, playerSprt));
 		m_player->Update(Screen::Instance().ElapsedTime());
@@ -73,7 +78,6 @@ void World::Run() {
 		if (m_entities[i]->GetType() != EDET_PLAYER) {
 			IsCollisionMessage isColMsg(m_entities[i]);
 			m_player->ReceiveMessage(&isColMsg);
-			//m_player must modify IsCollisionMessage::m_collided
 			
 			if (isColMsg.m_collided) {
 				if (m_entities[i]->GetType() == EDET_ENEMY)
@@ -130,6 +134,9 @@ Entity * World::RandomSpawnEntity() {
 	ComponentCollision * colComp = new ComponentCollision(m_player, sprt);
 	entity->AddComponent(colComp);
 
+	ComponentRandomMovement * randMovComp = new ComponentRandomMovement(entity, 1, 1);
+	entity->AddComponent(randMovComp);
+
 	entity->Update(Screen::Instance().ElapsedTime());
 
 	return entity;
@@ -176,25 +183,6 @@ void World::DespawnEntity(unsigned int pos) {
 EDodgerEntityType World::RandomGenEntityType() {
 	EDodgerEntityType e = (EDodgerEntityType)(unsigned short int)(genRandomF(1, EDET_NUM_COLORS));
 	return e;
-}
-
-void World::CheckAndUpdateEntityDirection(Entity * entity) {
-	//in all cases, x/y position is reset -> avoids bouncing
-	/*if (entity->GetX() > Screen::Instance().GetWidth() - entity->GetSizeX() - BORDER_THRESHOLD) {
-		entity->SetX(Screen::Instance().GetWidth() - entity->GetSizeX() - BORDER_THRESHOLD);
-		entity->SetSpeedX(entity->GetSpeedX() * -1);
-	} else if (entity->GetX() <= 0) {
-		entity->SetX(BORDER_THRESHOLD);
-		entity->SetSpeedX(entity->GetSpeedX() * -1);
-	}
-
-	if (entity->GetY() > Screen::Instance().GetHeight() - entity->GetSizeY() - BORDER_THRESHOLD) {
-		entity->SetY(Screen::Instance().GetHeight() - entity->GetSizeY() - BORDER_THRESHOLD);
-		entity->SetSpeedY(entity->GetSpeedY() * -1);
-	} else if (entity->GetY() <= 0) {
-		entity->SetY(BORDER_THRESHOLD);
-		entity->SetSpeedY(entity->GetSpeedY() * -1);
-	}*/
 }
 
 Image * GetImageByEntityType(EDodgerEntityType et) {

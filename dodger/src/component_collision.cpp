@@ -25,6 +25,4 @@ void ComponentCollision::ReceiveMessage(Message * msg) {
 	}
 }
 
-void ComponentCollision::Update(float elapsed) {
-
-}
+void ComponentCollision::Update(float elapsed) {}

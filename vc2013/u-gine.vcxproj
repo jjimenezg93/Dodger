@@ -95,6 +95,7 @@
     <ClInclude Include="..\dodger\include\component_collision.h" />
     <ClInclude Include="..\dodger\include\component_playercontrol.h" />
     <ClInclude Include="..\dodger\include\component_position.h" />
+    <ClInclude Include="..\dodger\include\component_random_movement.h" />
     <ClInclude Include="..\dodger\include\component_render.h" />
     <ClInclude Include="..\dodger\include\defs.h" />
     <ClInclude Include="..\dodger\include\entity.h" />
@@ -146,6 +147,7 @@
     <ClCompile Include="..\dodger\src\component_collision.cpp" />
     <ClCompile Include="..\dodger\src\component_playercontrol.cpp" />
     <ClCompile Include="..\dodger\src\component_position.cpp" />
+    <ClCompile Include="..\dodger\src\component_random_movement.cpp" />
     <ClCompile Include="..\dodger\src\component_render.cpp" />
     <ClCompile Include="..\dodger\src\entity.cpp" />
     <ClCompile Include="..\dodger\src\game.cpp" />
