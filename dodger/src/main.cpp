@@ -6,6 +6,7 @@
 #include "../include/as_game.h"
 #include "../include/as_start_menu.h"
 #include "../include/defs.h"
+#include "../include/text_manager.h"
 
 AppState * g_currentAppState;
 EDodgerAppState g_wantedState;
@@ -26,21 +27,22 @@ void DestroyState(AppState *stateToDestroy) {
 int main() {
 	Screen::Instance().Open(1024, 720, false);
 
-	g_currentMenuOp = EDMO_START_MENU;
-	GSetWantedState(EDAS_START_MENU);
+	g_currentMenuOp = EDMO_LANG_ES;
+	GSetWantedState(EDAS_CHOOSE_LANG);
 
 #pragma warning(disable: 4127)
 	while (1) {
 #pragma warning(default: 4127)
-		if (g_wantedState == EDAS_EXIT_APP)
+		if (g_wantedState == EDAS_EXIT_APP) {
 			break;
-		else if (g_wantedState != EDAS_NULL) {
+		} else if (g_wantedState != EDAS_NULL) {
 			if (g_currentAppState) {
 				DestroyState(g_currentAppState);
 			}
 			g_currentAppState = newAppState(g_wantedState);
-			if (g_currentAppState)
+			if (g_currentAppState) {
 				g_currentAppState->Activate();
+			}
 
 			GSetWantedState(EDAS_NULL);			//critical for this conditions to work properly
 		}

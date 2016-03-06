@@ -88,6 +88,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\dodger\include\app_state.h" />
+    <ClInclude Include="..\dodger\include\as_choose_lang.h" />
     <ClInclude Include="..\dodger\include\as_game.h" />
     <ClInclude Include="..\dodger\include\as_game_over.h" />
     <ClInclude Include="..\dodger\include\as_start_menu.h" />
@@ -141,6 +142,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\dodger\src\app_state.cpp" />
+    <ClCompile Include="..\dodger\src\as_choose_lang.cpp" />
     <ClCompile Include="..\dodger\src\as_game.cpp" />
     <ClCompile Include="..\dodger\src\as_game_over.cpp" />
     <ClCompile Include="..\dodger\src\as_start_menu.cpp" />

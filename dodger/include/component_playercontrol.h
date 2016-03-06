@@ -10,8 +10,7 @@ class ComponentPlayerControl: public Component {
 public:
 	ComponentPlayerControl(Entity * et);
 
-	virtual void ReceiveMessage(Message * msg);
-
+	virtual void ReceiveMessage(Message * const msg);
 	virtual void Update(float elapsed);
 private:
 	float m_x, m_y;

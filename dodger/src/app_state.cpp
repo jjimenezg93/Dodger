@@ -1,4 +1,5 @@
 #include "../include/../include/app_state.h"
+#include "../include/../include/as_choose_lang.h"
 #include "../include/../include/as_game.h"
 #include "../include/../include/as_game_over.h"
 #include "../include/../include/as_start_menu.h"
@@ -9,6 +10,9 @@ AppState *newAppState(EDodgerAppState wanted) {
 	switch (wanted) {
 	case EDAS_NULL:
 		return nullptr;
+		break;
+	case EDAS_CHOOSE_LANG:
+		return new ASChooseLang();
 		break;
 	case EDAS_START_MENU:
 		return new ASStartMenu();

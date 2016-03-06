@@ -8,7 +8,7 @@ class Component {
 public:
 	virtual ~Component() {}
 
-	virtual void ReceiveMessage(Message * msg) = 0;
+	virtual void ReceiveMessage(Message * const msg) = 0;
 	virtual void Update(float elapsed) = 0;
 protected:	
 	Entity * m_owner;

@@ -9,8 +9,7 @@ class ComponentCollision: public Component {
 public:
 	ComponentCollision(Entity * et, Sprite * sprt);
 
-	virtual void ReceiveMessage(Message * msg);
-
+	virtual void ReceiveMessage(Message * const msg);
 	virtual void Update(float elapsed);
 private:
 	Sprite * m_sprite;

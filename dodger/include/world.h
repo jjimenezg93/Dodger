@@ -25,8 +25,6 @@ private:
 	void DespawnEntity(unsigned int pos);
 	EDodgerEntityType RandomGenEntityType();
 
-	void CheckAndUpdateEntityDirection(Entity * object);
-
 	Scene * m_scene;
 	Array<Entity *> m_entities;
 	Entity * m_player; //makes collision detection easier

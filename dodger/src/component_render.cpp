@@ -23,7 +23,7 @@ void ComponentRender::ReceiveMessage(Message * msg) {
 	}
 }
 
-void ComponentRender::Update(float elapsed) {
+void ComponentRender::Update(float) {
 	if (m_sprite->GetX() > Screen::Instance().GetWidth()
 		- m_sprite->GetImage()->GetWidth() * m_sprite->GetImage()->GetHFrames()
 		- BORDER_THRESHOLD || m_sprite->GetX() <= 0){

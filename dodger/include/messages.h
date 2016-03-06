@@ -27,7 +27,7 @@ struct GetSpriteMessage: public Message {
 };
 
 struct IsCollisionMessage: public Message {
-	IsCollisionMessage(Entity * et) {
+	IsCollisionMessage(Entity * const et) {
 		m_entity = et;
 		m_collided = false;
 	}
@@ -55,7 +55,7 @@ struct PlayerControlMessage: public Message {
 
 //if there is a way to set the Sprite, we need this message to be called from ComponentRender
 struct UpdateSpriteMessage: public Message {
-	UpdateSpriteMessage(Sprite * sp) {
+	UpdateSpriteMessage(Sprite * const sp) {
 		m_sprt = sp;
 	}
 	Sprite * m_sprt;

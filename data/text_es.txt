@@ -1,6 +1,15 @@
-﻿TEXT_PLAY_GAME "Play Game"
-TEXT_LEVEL_1 "Level 1"
-TEXT_LEVEL_2 "Level 2"
-TEXT_LEVEL_3 "Level 3"
-TEXT_EXIT_GAME "Exit Game"
-TEXT_BACK_MAIN_MENU "Back to main menu"
+﻿TEXT_NULL null
+TEXT_BACK_MAIN_MENU Volver a menu
+TEXT_EXIT_GAME Salir del juego
+TEXT_EXIT_APP Salir de aplicacion
+TEXT_LEVEL_1 Nivel 1
+TEXT_LEVEL_2 Nivel 2
+TEXT_LEVEL_3 Nivel 3
+TEXT_PLAY_GAME Jugar partida
+TEXT_POINTS Puntos
+TEXT_SPEED Velocidad
+TEXT_LANG_WINDOW Dodger - Elegir idioma
+TEXT_LANG_EN Ingles
+TEXT_LANG_ES Español
+TEXT_MAIN_WINDOW Dodger - Menu principal
+TEXT_GAME_OVER Fin del juego

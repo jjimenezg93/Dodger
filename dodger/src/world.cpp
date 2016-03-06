@@ -28,7 +28,6 @@ World::World(const String background, int id, int maxCollid, int initSpeed) {
 	m_scene = new Scene(ResourceManager::Instance().LoadImage(background));
 
 	m_player = nullptr;
-
 }
 
 World::~World() {
@@ -41,11 +40,13 @@ World::~World() {
 void World::Run() {
 	if (!m_player) {
 		Image * playerImg = ResourceManager::Instance().LoadImage(String(PLAYER_FILENAME));
+
 		Sprite * playerSprt = m_scene->CreateSprite(playerImg);
 		playerSprt->SetCollision(Sprite::CollisionMode::COLLISION_RECT);
 		playerSprt->SetCollisionPixelData(
 			ResourceManager::Instance().LoadCollisionPixelData(PLAYER_COLLISION_FILENAME));
 		playerSprt->SetCollision(Sprite::CollisionMode::COLLISION_PIXEL);
+
 		m_player = new Entity(EDET_PLAYER);
 		m_player->AddComponent(new ComponentPlayerControl(m_player));
 		m_player->AddComponent(new ComponentPosition(m_player,
@@ -55,7 +56,8 @@ void World::Run() {
 				Screen::Instance().GetHeight() - SPAWN_BORDER))));
 		m_player->AddComponent(new ComponentRender(m_player, playerSprt));
 		m_player->AddComponent(new ComponentCollision(m_player, playerSprt));
-		m_player->Update(Screen::Instance().ElapsedTime());
+		m_player->Update(static_cast<float>(Screen::Instance().ElapsedTime()));
+
 		m_entities.Add(m_player);
 	}
 
@@ -63,7 +65,7 @@ void World::Run() {
 		if (g_game->GetRandomGen() % 10 == 0)
 			m_entities.Add(RandomSpawnEntity());
 
-	if (!g_game->GetRandomGen()) {		//very rarely despawn an entity
+	if (!g_game->GetRandomGen()) { //very rarely despawn an entity
 		int entityToDelete = static_cast<int>(genRandomF(0, m_entities.Size()));
 
 		if (m_entities[entityToDelete]->GetType() == EDET_PLAYER) {
@@ -78,7 +80,6 @@ void World::Run() {
 		if (m_entities[i]->GetType() != EDET_PLAYER) {
 			IsCollisionMessage isColMsg(m_entities[i]);
 			m_player->ReceiveMessage(&isColMsg);
-			
 			if (isColMsg.m_collided) {
 				if (m_entities[i]->GetType() == EDET_ENEMY)
 					GSetWantedState(EDAS_GAME_OVER);
@@ -97,7 +98,7 @@ void World::Run() {
 				}
 			}
 		}
-		m_entities[i]->Update(Screen::Instance().ElapsedTime());
+		m_entities[i]->Update(static_cast<float>(Screen::Instance().ElapsedTime()));
 	}
 }
 
@@ -113,9 +114,9 @@ Entity * World::RandomSpawnEntity() {
 	sprt->SetCollision(Sprite::CollisionMode::COLLISION_RECT);
 	Entity * entity = new Entity(e);
 	
-	/* not all sprites should have pixel collision, the best solution would be having a manager
-	to decide if collision must be circ, rect or pixel, or get it from file, but this solution
-	is easier to implement for now */
+	/* not all sprites should have pixel collision, the most efficient solution would be
+	having a manager to decide if collision must be circ, rect or pixel, or get it from file,
+	but this solution is easier to implement for now */
 	sprt->SetCollisionPixelData(GetCollisionPixelData(*entity));
 	sprt->SetCollision(Sprite::CollisionMode::COLLISION_PIXEL);
 
@@ -126,18 +127,16 @@ Entity * World::RandomSpawnEntity() {
 			Screen::Instance().GetHeight() - SPAWN_BORDER)));
 	entity->AddComponent(posComp);
 
-	//RANDOM MOVEMENT COMPONENT
-
-	ComponentRender * renderComp = new ComponentRender(entity, sprt);
-	entity->AddComponent(renderComp);
+	ComponentRandomMovement * randMovComp = new ComponentRandomMovement(entity, 1, 1);
+	entity->AddComponent(randMovComp);
 
 	ComponentCollision * colComp = new ComponentCollision(m_player, sprt);
 	entity->AddComponent(colComp);
 
-	ComponentRandomMovement * randMovComp = new ComponentRandomMovement(entity, 1, 1);
-	entity->AddComponent(randMovComp);
+	ComponentRender * renderComp = new ComponentRender(entity, sprt);
+	entity->AddComponent(renderComp);
 
-	entity->Update(Screen::Instance().ElapsedTime());
+	entity->Update(static_cast<float>(Screen::Instance().ElapsedTime()));
 
 	return entity;
 }
@@ -162,6 +161,7 @@ CollisionPixelData * GetCollisionPixelData(const Entity &et) {
 			SUB_SPEED_COLLISION_FILENAME);
 		break;
 	default:
+		return nullptr;
 		break;
 	}
 }
@@ -181,7 +181,7 @@ void World::DespawnEntity(unsigned int pos) {
 }
 
 EDodgerEntityType World::RandomGenEntityType() {
-	EDodgerEntityType e = (EDodgerEntityType)(unsigned short int)(genRandomF(1, EDET_NUM_COLORS));
+	EDodgerEntityType e = (EDodgerEntityType)(unsigned short int)(genRandomF(1, EDET_NUM_TYPES));
 	return e;
 }
 

@@ -27,7 +27,7 @@ public:
 private:
 	void SetPoints(int newPoints) { m_points = newPoints; }
 
-	void ReadFile(const String * fileName, Array<String> &paramsArray);
+	void ReadFile(const String * const fileName, Array<String> &paramsArray);
 	
 	UI * m_ui;
 	World * m_world;

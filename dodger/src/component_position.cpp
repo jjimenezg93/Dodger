@@ -24,6 +24,6 @@ void ComponentPosition::ReceiveMessage(Message * msg) {
 	}
 }
 
-void ComponentPosition::Update(float elapsed) {
+void ComponentPosition::Update(float) {
 	m_owner->ReceiveMessage(new UpdateSpritePosMessage(m_x, m_y));
 }

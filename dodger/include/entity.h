@@ -12,16 +12,15 @@ struct Message;
 
 class Entity {
 public:
-	Entity(EDodgerEntityType type);
+	Entity(const EDodgerEntityType type);
 	virtual ~Entity();
 
 	virtual EDodgerEntityType GetType() const { return m_type; }
-	virtual void SetType(EDodgerEntityType newType) { m_type = newType; } //not in use atm
+	virtual void SetType(const EDodgerEntityType newType) { m_type = newType; } //not in use atm
 
-	void AddComponent(Component * comp);
+	void AddComponent(Component * const comp);
 
-	void ReceiveMessage(Message * msg);
-
+	void ReceiveMessage(Message * const msg);
 	virtual void Update(float elapsed);
 private:
 	std::vector<Component *> m_components;

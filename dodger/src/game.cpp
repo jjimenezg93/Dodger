@@ -6,6 +6,7 @@
 #include "../include/entity.h"
 #include "../include/game.h"
 #include "../include/ui.h"
+#include "../include/text_manager.h"
 #include "../include/world.h"
 
 //default World params
@@ -49,7 +50,8 @@ void Game::Init() {
 		m_ui = new UI(m_world);
 	}
 
-	m_windowTitle = String("Points = ");
+	//m_windowTitle = String("Points = ");
+	m_windowTitle = String(TextManager::Instance().GetString("TEXT_POINTS").c_str()) + " = ";
 
 	delete fileName;
 }
@@ -65,8 +67,9 @@ void Game::Run() {
 }
 
 void Game::Draw() {
-	Screen::Instance().SetTitle(m_windowTitle + String::FromInt(m_points)
-		+ " | Speed = " + String::FromInt(m_speed));
+	Screen::Instance().SetTitle(m_windowTitle + String::FromInt(m_points) + " | "
+		+ TextManager::Instance().GetString("TEXT_SPEED").c_str() + " = "
+		+ String::FromInt(m_speed));
 
 	m_world->Draw();
 }
@@ -76,7 +79,7 @@ int Game::GetWorldSpeed() const {
 }
 
 //param order: bg_file, id, max_collidables, init_speed
-void Game::ReadFile(const String *fileName, Array<String> &paramsArray) {
+void Game::ReadFile(const String * const fileName, Array<String> &paramsArray) {
 	String strFile = String::Read(*fileName);
 	paramsArray = strFile.Split(String(","));
 }

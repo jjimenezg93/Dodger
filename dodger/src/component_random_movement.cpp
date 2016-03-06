@@ -40,7 +40,7 @@ void ComponentRandomMovement::Update(float elapsed) {
 	m_lastChangeX += elapsed;
 	m_lastChangeY += elapsed;
 
-	UpdateComponentPosMessage posMsg(g_game->GetWorldSpeed() * m_dirX,
-		g_game->GetWorldSpeed() * m_dirY, elapsed);
+	UpdateComponentPosMessage posMsg(static_cast<float>(g_game->GetWorldSpeed() * m_dirX),
+		static_cast<float>(g_game->GetWorldSpeed() * m_dirY), elapsed);
 	m_owner->ReceiveMessage(&posMsg);
 }

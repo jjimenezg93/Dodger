@@ -2,6 +2,7 @@
 #include "../include/as_start_menu.h"
 #include "../include/defs.h"
 #include "../../include/u-gine.h"
+#include "../include/text_manager.h"
 
 ASStartMenu::~ASStartMenu() {
 	ResourceManager::Instance().FreeResources();
@@ -14,18 +15,24 @@ void ASStartMenu::Activate() {
 	m_imgBackground = new Image(MAIN_MENU_BACKGROUND);
 	m_mainFont = ResourceManager::Instance().LoadFont("data/monospaced.png");
 
-	m_menuOptions.Add(new MenuOption(EDMO_LEVEL_1, String("Level 1")));
-	m_menuOptions.Add(new MenuOption(EDMO_LEVEL_2, String("Level 2")));
-	m_menuOptions.Add(new MenuOption(EDMO_LEVEL_3, String("Level 3")));
-	m_menuOptions.Add(new MenuOption(EDMO_EXIT_APP, String("Exit Game")));
+	m_menuOptions.Add(new MenuOption(EDMO_LEVEL_1,
+		String(TextManager::Instance().GetString("TEXT_LEVEL_1").c_str())));
+	m_menuOptions.Add(new MenuOption(EDMO_LEVEL_2,
+		String(TextManager::Instance().GetString("TEXT_LEVEL_2").c_str())));
+	m_menuOptions.Add(new MenuOption(EDMO_LEVEL_3,
+		String(TextManager::Instance().GetString("TEXT_LEVEL_3").c_str())));
+	m_menuOptions.Add(new MenuOption(EDMO_EXIT_APP,
+		String(TextManager::Instance().GetString("TEXT_EXIT_APP").c_str())));
 
 	m_activeOption = 0;
 	m_elapsedKeyInput = 0;
 	m_canInput = false;
 
-	Renderer::Instance().SetBlendMode(Renderer::Instance().ALPHA);		//menu text without solid background
+	//text bg
+	Renderer::Instance().SetBlendMode(Renderer::Instance().ALPHA);
 	
-	Screen::Instance().SetTitle(String("DODGER - Start Menu"));
+	Screen::Instance().SetTitle(
+		String(String(TextManager::Instance().GetString("TEXT_MAIN_WINDOW").c_str())));
 }
 
 void ASStartMenu::Deactivate() {

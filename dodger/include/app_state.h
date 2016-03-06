@@ -1,7 +1,14 @@
 #ifndef _APP_STATE_H
 #define _APP_STATE_H
 
-enum EDodgerAppState { EDAS_NULL, EDAS_START_MENU, EDAS_GAME, EDAS_GAME_OVER, EDAS_EXIT_APP };
+enum EDodgerAppState {
+	EDAS_NULL, 
+	EDAS_CHOOSE_LANG,
+	EDAS_START_MENU,
+	EDAS_GAME,
+	EDAS_GAME_OVER,
+	EDAS_EXIT_APP
+};
 
 class AppState {
 public:

@@ -7,8 +7,7 @@ class ComponentRandomMovement: public Component {
 public:
 	ComponentRandomMovement(Entity * et, int dirX, int dirY);
 
-	virtual void ReceiveMessage(Message * msg);
-
+	virtual void ReceiveMessage(Message * const msg);
 	virtual void Update(float elapsed);
 private:
 	int m_dirX, m_dirY;

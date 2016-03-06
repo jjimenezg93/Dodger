@@ -7,7 +7,7 @@
 #include "../include/player.h"
 
 
-UI::UI(World *ptrWorld) {
+UI::UI(World * const ptrWorld) {
 	m_world = ptrWorld;
 }
 
@@ -26,6 +26,7 @@ void UI::ProcessInput() {
 			new PlayerControlMessage(EDPC_RIGHT,
 				static_cast<float>(Screen::Instance().ElapsedTime())));
 	}
+
 	if (Screen::Instance().KeyPressed(GLFW_KEY_UP)) {
 		m_world->GetPlayer()->ReceiveMessage(
 			new PlayerControlMessage(EDPC_UP,
@@ -39,6 +40,6 @@ void UI::ProcessInput() {
 
 void UI::Draw() {}
 
-void UI::SetWorld(World *ptrWorld) {
+void UI::SetWorld(World * const ptrWorld) {
 	m_world = ptrWorld;
 }

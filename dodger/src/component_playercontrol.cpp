@@ -75,4 +75,4 @@ void ComponentPlayerControl::ReceiveMessage(Message * msg) {
 	}
 }
 
-void ComponentPlayerControl::Update(float elapsed) {}
+void ComponentPlayerControl::Update(float) {}
