@@ -1,5 +1,6 @@
 #include "../include/../include/as_game.h"
 #include "../include/../include/defs.h"
+#include "../include/../include/game.h"
 
 ASGame::~ASGame() {
 	delete g_game;

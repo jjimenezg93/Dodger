@@ -28,9 +28,9 @@ void TextManager::ReadFile(const std::string &filename) {
 	std::string fileStr, key, value;
 
 	while (std::getline(fileIn, fileStr, ' ')) {
-		key = fileStr; //should be text id
+		key = fileStr; //must be text id
 		std::getline(fileIn, fileStr);
-		value = fileStr; //should be language value
+		value = fileStr; //must be language value
 		m_strings.insert(std::pair<std::string, std::string>(key, value));
 	}
 }

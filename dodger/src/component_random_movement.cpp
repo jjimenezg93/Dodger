@@ -4,6 +4,7 @@
 #include "../include/entity.h"
 #include "../include/messages.h"
 #include "../include/game_settings.h"
+#include "../include/game.h"
 
 #define MIN_CHANGE_DIRECTION_TIME 0.05
 

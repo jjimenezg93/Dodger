@@ -1,6 +1,3 @@
-#include <ctime>
-#include <stdio.h>
-
 #include "../include/as_start_menu.h"
 #include "../include/defs.h"
 #include "../include/entity.h"
@@ -8,6 +5,9 @@
 #include "../include/ui.h"
 #include "../include/text_manager.h"
 #include "../include/world.h"
+
+#include <ctime>
+#include <stdio.h>
 
 //default World params
 #define DEFAULT_WORLD_ID 0

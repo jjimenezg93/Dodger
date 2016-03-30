@@ -1,14 +1,15 @@
 #ifndef _DEFS_H
 #define _DEFS_H
 
-#include "app_state.h"
-#include "game.h"
+class AppState;
+class Game;
+enum EDodgerAppState;
 
 #define DEFAULT_BACKGROUND "data/space_bg.jpg"
 #define MAIN_MENU_BACKGROUND "data/main_menu_bg.jpg"
 #define MENU_DELAY 0.2
-#define LANG_ES_FILENAME "data/text_es.txt"
 #define LANG_EN_FILENAME "data/text_en.txt"
+#define LANG_ES_FILENAME "data/text_es.txt"
 #define LEVEL_1_FILENAME "data/level1.txt"
 #define LEVEL_2_FILENAME "data/level2.txt"
 #define LEVEL_3_FILENAME "data/level3.txt"

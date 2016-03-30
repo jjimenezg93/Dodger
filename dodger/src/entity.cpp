@@ -1,4 +1,5 @@
 #include "../include/entity.h"
+#include "../include/defs.h"
 #include "../include/world.h"
 #include "../include/component.h"
 #include "../include/messages.h"

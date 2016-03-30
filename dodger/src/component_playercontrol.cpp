@@ -3,8 +3,10 @@
 #include "../include/component_render.h"
 #include "../include/entity.h"
 #include "../include/game_settings.h"
+#include "../../include/image.h"
 #include "../include/messages.h"
 #include "../../include/screen.h"
+#include "../../include/sprite.h"
 
 ComponentPlayerControl::ComponentPlayerControl(Entity * et) {
 	m_owner = et;
@@ -24,8 +26,8 @@ void ComponentPlayerControl::ReceiveMessage(Message * msg) {
 
 		if (sprtMsg.m_modified) { //if modified, it means there is a sprite in the entity
 			if (sprtMsg.m_sprt->GetX() > Screen::Instance().GetWidth()
-				- sprtMsg.m_sprt->GetImage()->GetWidth()
-				* sprtMsg.m_sprt->GetImage()->GetHFrames())
+					- sprtMsg.m_sprt->GetImage()->GetWidth()
+					* sprtMsg.m_sprt->GetImage()->GetHFrames())
 				m_canMoveRight = false;
 			else
 				m_canMoveRight = true;
@@ -36,8 +38,8 @@ void ComponentPlayerControl::ReceiveMessage(Message * msg) {
 				m_canMoveLeft = true;
 
 			if (sprtMsg.m_sprt->GetY() > Screen::Instance().GetHeight()
-				- sprtMsg.m_sprt->GetImage()->GetHeight()
-				* sprtMsg.m_sprt->GetImage()->GetVFrames())
+					- sprtMsg.m_sprt->GetImage()->GetHeight()
+					* sprtMsg.m_sprt->GetImage()->GetVFrames())
 				m_canMoveDown = false;
 			else
 				m_canMoveDown = true;

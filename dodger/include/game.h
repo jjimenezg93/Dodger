@@ -17,7 +17,8 @@ public:
 	void Draw();
 
 	World * GetWorld() const { return m_world; }
-	int GetWorldSpeed() const;					//defined in .cpp in order to avoid dependency in .h (needs to access m_world)
+	int GetWorldSpeed() const;
+	//GetWorldSpeed()defined in .cpp in order to reduce dependency in .h (needs to access m_world)
 
 	int GetPoints() const { return m_points; }
 	void AddPoints(int p) { m_points += abs(p); }

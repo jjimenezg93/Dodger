@@ -3,11 +3,10 @@
 
 #pragma warning(disable: 4820)
 
-#include "defs.h"
-
 #include <vector>
 
 class Component;
+enum EDodgerEntityType;
 struct Message;
 
 class Entity {

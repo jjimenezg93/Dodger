@@ -1,3 +1,4 @@
+#include "../include/app_state.h"
 #include "../include/component_playercontrol.h"
 #include "../include/defs.h"
 #include "../include/ui.h"
@@ -5,7 +6,6 @@
 #include "../../include/u-gine.h"
 #include "../include/world.h"
 #include "../include/player.h"
-
 
 UI::UI(World * const ptrWorld) {
 	m_world = ptrWorld;

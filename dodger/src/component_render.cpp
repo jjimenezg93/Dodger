@@ -25,15 +25,15 @@ void ComponentRender::ReceiveMessage(Message * msg) {
 
 void ComponentRender::Update(float) {
 	if (m_sprite->GetX() > Screen::Instance().GetWidth()
-		- m_sprite->GetImage()->GetWidth() * m_sprite->GetImage()->GetHFrames()
-		- BORDER_THRESHOLD || m_sprite->GetX() <= 0){
+			- m_sprite->GetImage()->GetWidth() * m_sprite->GetImage()->GetHFrames()
+			- BORDER_THRESHOLD || m_sprite->GetX() <= 0) {
 		ChangeMovementDirection changeXMsg(true, false);
 		m_owner->ReceiveMessage(&changeXMsg);
 	}
 
 	if (m_sprite->GetY() > Screen::Instance().GetHeight()
-		- m_sprite->GetImage()->GetHeight() * m_sprite->GetImage()->GetVFrames()
-		- BORDER_THRESHOLD || m_sprite->GetY() <= 0) {
+			- m_sprite->GetImage()->GetHeight() * m_sprite->GetImage()->GetVFrames()
+			- BORDER_THRESHOLD || m_sprite->GetY() <= 0) {
 		ChangeMovementDirection changeYMsg(false, true);
 		m_owner->ReceiveMessage(&changeYMsg);
 	}

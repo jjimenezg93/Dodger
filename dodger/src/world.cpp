@@ -1,6 +1,7 @@
 #pragma warning(disable: 4061)
 //ET_NUM_COLORS not explicitly handled (GetImageByEntityType -> switch-case)
 
+#include "../include/app_state.h"
 #include "../include/component_collision.h"
 #include "../include/component_playercontrol.h"
 #include "../include/component_position.h"
@@ -10,8 +11,8 @@
 #include "../include/game.h"
 #include "../include/game_Settings.h"
 #include "../include/messages.h"
-#include "../include/player.h"
 #include "../include/world.h"
+#include "../include/player.h"
 
 #include "../../include/u-gine.h"
 
@@ -47,7 +48,7 @@ void World::Run() {
 			ResourceManager::Instance().LoadCollisionPixelData(PLAYER_COLLISION_FILENAME));
 		playerSprt->SetCollision(Sprite::CollisionMode::COLLISION_PIXEL);
 
-		m_player = new Entity(EDET_PLAYER);
+		m_player = new Player(EDET_PLAYER);
 		m_player->AddComponent(new ComponentPlayerControl(m_player));
 		m_player->AddComponent(new ComponentPosition(m_player,
 			static_cast<float>(genRandomF(SPAWN_BORDER,
@@ -116,7 +117,7 @@ Entity * World::RandomSpawnEntity() {
 	
 	/* not all sprites should have pixel collision, the most efficient solution would be
 	having a manager to decide if collision must be circ, rect or pixel, or get it from file,
-	but this solution is easier to implement for now */
+	but this solution is far easier to implement */
 	sprt->SetCollisionPixelData(GetCollisionPixelData(*entity));
 	sprt->SetCollision(Sprite::CollisionMode::COLLISION_PIXEL);
 
@@ -142,7 +143,7 @@ Entity * World::RandomSpawnEntity() {
 }
 
 CollisionPixelData * GetCollisionPixelData(const Entity &et) {
-	CollisionPixelData * colPixelData = nullptr;
+	CollisionPixelData * colPixelData;
 	switch (et.GetType()) {
 	case EDET_POINTS:
 		return colPixelData = ResourceManager::Instance().LoadCollisionPixelData(

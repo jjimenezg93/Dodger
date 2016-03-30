@@ -104,6 +104,7 @@
     <ClInclude Include="..\dodger\include\game_settings.h" />
     <ClInclude Include="..\dodger\include\menu_defs.h" />
     <ClInclude Include="..\dodger\include\messages.h" />
+    <ClInclude Include="..\dodger\include\player.h" />
     <ClInclude Include="..\dodger\include\text_manager.h" />
     <ClInclude Include="..\dodger\include\ui.h" />
     <ClInclude Include="..\dodger\include\world.h" />
@@ -154,6 +155,7 @@
     <ClCompile Include="..\dodger\src\entity.cpp" />
     <ClCompile Include="..\dodger\src\game.cpp" />
     <ClCompile Include="..\dodger\src\main.cpp" />
+    <ClCompile Include="..\dodger\src\player.cpp" />
     <ClCompile Include="..\dodger\src\text_manager.cpp" />
     <ClCompile Include="..\dodger\src\ui.cpp" />
     <ClCompile Include="..\dodger\src\world.cpp" />

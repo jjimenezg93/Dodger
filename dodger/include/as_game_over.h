@@ -5,8 +5,9 @@
 
 #include "app_state.h"
 #include "defs.h"
-#include "menu_defs.h"
 #include "../../include/u-gine.h"
+
+struct MenuOption;
 
 class ASGameOver : public AppState {
 public:
